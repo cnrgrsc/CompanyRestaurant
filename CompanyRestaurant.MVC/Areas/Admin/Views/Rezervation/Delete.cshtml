@@ -1,0 +1,28 @@
+﻿@using CompanyRestaurant.MVC.Models.ViewModels.RezervationVM
+
+@model DeleteRezervationVM
+
+@{
+    ViewData["Title"] = "Delete Rezervation";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h3>@Model.Name @Model.Surname Rezervesini sil</h3>
+
+<!-- Ürün bilgilerini göster -->
+<div>
+    <p>Adı: @Model.Name</p>
+    <p>Soyadı: @Model.Surname</p>
+    <p>Telefon: @Model.PhoneNumber</p>
+    <p>Mail: @Model.Email</p>
+    <p>Tarih: @Model.Date</p>
+    <p>Açıklama: @Model.Description</p>
+    <p>Aktif: @(Model.IsActive ? "Evet" : "Hayır")</p>
+</div>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" name="id" value="@Model.Id" />
+    <p>@Model.Name @Model.Surname Rezervesini silmek istediğinize emin misiniz?</p>
+    <button type="submit" class="btn btn-danger">Evet, Sil</button>
+    <a asp-action="Index" class="btn btn-secondary">İptal</a>
+</form>

@@ -1,0 +1,55 @@
+﻿@using CompanyRestaurant.MVC.Models.ViewModels.MaterialPriceVM;
+
+
+@model UpdateMaterialPriceVM
+
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="col-md-6">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Malzeme-Fiyat Güncelle</h3>
+        </div>
+        <!-- /.card-header -->
+        <!-- form start -->
+        <form method="post">
+            <div class="card-body">
+                <div class="form-group">
+                    <label>Adı</label>
+                    <input asp-for="Name" type="text" class="form-control" placeholder="Ad girin">
+                </div>
+                <div class="form-group">
+                    <label>Fiyat</label>
+                    <input asp-for="Price" type="text" class="form-control" placeholder="Fiyat girin">
+                </div>
+                <div class="form-group">
+                    <label>Açıklama</label>
+                    <input asp-for="Description" type="number" class="form-control" placeholder="Açıklama girin">
+                </div>
+
+                <div class="form-group">
+                    <label>Aktif mi?</label>
+                    <div>
+                        <label>
+                            <input type="radio" asp-for="IsActive" value="true" checked />
+                            Evet
+                        </label>
+                        <label>
+                            <input type="radio" asp-for="IsActive" value="false" />
+                            Hayır
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <!-- /.card-body -->
+
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Güncelle</button>
+            </div>
+        </form>
+    </div>
+</div>
+

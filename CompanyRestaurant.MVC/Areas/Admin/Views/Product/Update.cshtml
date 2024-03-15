@@ -1,0 +1,73 @@
+﻿@using CompanyRestaurant.MVC.Models.ViewModels.ProductVM;
+
+@model UpdateProductVM
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="col-md-6">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Ürün Güncelle</h3>
+        </div>
+        <form asp-action="Update" method="post" enctype="multipart/form-data">
+            <div class="card-body">
+                <div class="form-group">
+                    <label>Ürün Adı</label>
+                    <input asp-for="ProductName" class="form-control" placeholder="Ürün adı girin">
+                    <span asp-validation-for="ProductName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label>Fiyat</label>
+                    <input asp-for="Price" class="form-control" placeholder="Fiyat girin">
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label>Kategori</label>
+                    <select asp-for="CategoryId" asp-items="@ViewBag.CategoriesSelect" class="form-control">
+                        <option value="">Lütfen Kategori Seçiniz</option>
+                    </select>
+                    <span asp-validation-for="CategoryId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label>Açıklama</label>
+                    <textarea asp-for="Description" cols="5" rows="3" class="form-control"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Ürün Resmi</label>
+                    <input asp-for="ProductImage" type="file" class="form-control" />
+                    <span asp-validation-for="ProductImage" class="text-danger"></span>
+                </div>
+                @if (Model.ImageUrl != null)
+                {
+                    <div class="form-group">
+                        <img src="@Model.ImageUrl" alt="Mevcut Ürün Resmi" class="img-thumbnail mb-2">
+                        <input type="hidden" asp-for="ImageUrl" />
+                    </div>
+                }
+                <div class="form-group">
+                    <label>Aktif mi?</label>
+                    <div>
+                        <label>
+                            <input type="radio" asp-for="IsActive" value="true" checked />
+                            Evet
+                        </label>
+                        <label>
+                            <input type="radio" asp-for="IsActive" value="false" />
+                            Hayır
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Güncelle</button>
+            </div>
+        </form>
+    </div>
+</div>
+

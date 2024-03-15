@@ -1,0 +1,37 @@
+﻿@using CompanyRestaurant.MVC.Models.ViewModels.CategoryVM;
+
+
+@model CreateCategoryVM
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="col-md-6">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Kategori Oluştur</h3>
+        </div>
+        <!-- /.card-header -->
+        <!-- form start -->
+        <form method="post">
+            <div class="card-body">
+                <div class="form-group">
+                    <label>Kategori Ad</label>
+                    <input asp-for="CategoryName" type="text" class="form-control" placeholder="Kategori adı girin">
+                </div>
+                <div class="form-group">
+                    <label>Açıklama</label>
+                    <textarea asp-for="Description"  cols="5" rows="3" class="form-control"></textarea>
+                </div>
+            </div>
+            <!-- /.card-body -->
+
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Oluştur</button>
+            </div>
+        </form>
+    </div>
+</div>
+

@@ -1,0 +1,67 @@
+﻿@model List<Material>
+@{
+    ViewData["Title"] = "Malzeme Listesi";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header">
+        <div class="d-flex justify-content-between">
+            <h2>@ViewData["Title"]</h2>
+            <a asp-controller="Material" asp-action="Create" class="btn btn-success">Malzeme Ekle</a>
+        </div>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Adı</th>
+                    <th>Fiyatı</th>
+                    <th>Stok</th>
+                    <th>Tedarikçi</th>
+                    <th>Durumu</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.ID</td>
+                        <td>@item.MaterialName</td>
+                        <td>@item.Price</td>
+                        <td>@item.UnitInStock</td>
+                        <td>
+                            @foreach (var supplier in ViewBag.Suppliers as List<Supplier>)
+                            {
+                                @* if (item.SupplierID == supplier.ID)
+                                {
+                                    <span>@supplier.CompanyName</span>
+                                } *@
+                            }
+
+                        </td>
+                        <td>
+                            @if (item.IsActive)
+                            {
+                                <span class="right badge badge-success">Active</span>
+                            }
+                            else
+                            {
+                                <span class="right badge badge-danger">Passive</span>
+                            }
+
+                        </td>
+                        <td>
+                            <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-primary">Sil</a>
+                            <a asp-action="Update" asp-route-id="@item.ID" class="btn btn-warning">Güncelle</a>
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>
+

@@ -1,0 +1,73 @@
+﻿@using CompanyRestaurant.MVC.Models.ViewModels.EmployeeVM;
+
+
+@model UpdateEmployeeVM
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="col-md-6">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Çalışan Güncelle</h3>
+        </div>
+        <!-- /.card-header -->
+        <!-- form start -->
+        <form asp-action="Update" method="post" enctype="multipart/form-data">
+            <div class="card-body">
+                <div class="form-group">
+                    <label>Ad</label>
+                    <input asp-for="Name" type="text" class="form-control" placeholder="Çalışan adı girin">
+                    <span asp-validation-for="Name" class="text-danger"></span>
+
+                </div>
+                <div class="form-group">
+                    <label>Soyad</label>
+                    <input asp-for="Surname" type="text" class="form-control" placeholder="Çalışan soyadı girin">
+                    <span asp-validation-for="Surname" class="text-danger"></span>
+
+                </div>
+                <div class="form-group">
+                    <label>Ünvan</label>
+                    <input asp-for="Title" type="text" class="form-control" placeholder="Çalışan ünvanı girin">
+                    <span asp-validation-for="Title" class="text-danger"></span>
+
+                </div>
+                <div class="form-group">
+                    <label>TC</label>
+                    <input asp-for="TC" type="text" class="form-control" placeholder="Çalışan TC girin">
+                    <span asp-validation-for="TC" class="text-danger"></span>
+
+                </div>
+                <div class="form-group">
+                    <label>Telefon</label>
+                    <input asp-for="Phone" type="text" class="form-control" placeholder="Çalışan Telefon girin">
+                    <span asp-validation-for="Phone" class="text-danger"></span>
+
+                </div>
+
+                <div class="form-group">
+                    <label>Aktif mi?</label>
+                    <div>
+                        <label>
+                            <input type="radio" asp-for="IsActive" value="true" checked />
+                            Evet
+                        </label>
+                        <label>
+                            <input type="radio" asp-for="IsActive" value="false" />
+                            Hayır
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <!-- /.card-body -->
+
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Güncelle</button>
+            </div>
+        </form>
+    </div>
+</div>
+

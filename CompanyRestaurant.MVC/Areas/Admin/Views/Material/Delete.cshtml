@@ -1,0 +1,25 @@
+﻿@using CompanyRestaurant.MVC.Models.ViewModels.MaterialVM
+
+@model DeleteMaterialVM
+
+@{
+    ViewData["Title"] = "Delete Material";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h3>@Model.MaterialName Sil</h3>
+
+<!-- Ürün bilgilerini göster -->
+<div>
+    <p>Malzeme Adı: @Model.MaterialName</p>
+    <p>Fiyat: @Model.Price</p>
+    <p>Stok: @Model.UnitInStock</p>
+    <p>Aktif: @(Model.IsActive ? "Evet" : "Hayır")</p>
+</div>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" name="id" value="@Model.Id" />
+    <p>@Model.MaterialName ürününü silmek istediğinize emin misiniz?</p>
+    <button type="submit" class="btn btn-danger">Evet, Sil</button>
+    <a asp-action="Index" class="btn btn-secondary">İptal</a>
+</form>

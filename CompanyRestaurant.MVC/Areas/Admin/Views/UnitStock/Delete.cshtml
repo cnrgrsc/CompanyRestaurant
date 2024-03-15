@@ -1,0 +1,27 @@
+﻿@using CompanyRestaurant.MVC.Models.ViewModels.UnitStockVM;
+
+@model DeleteUnitStockVM
+
+@{
+    ViewData["Title"] = "Delete Unit-Stock";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h3>@Model.Stock Sil</h3>
+
+<!-- Ürün bilgilerini göster -->
+<div>
+    <p>Malzeme: @Model.MaterialID</p>
+    <p>Stok: @Model.Stock</p>
+    <p>Kritik Stok: @Model.CriticalStock</p>
+    <p>Minimum Stok: @Model.MinimumStockLevel</p>
+    <p>Aktif: @(Model.IsActive ? "Evet" : "Hayır")</p>
+
+</div>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" name="id" value="@Model.Id" />
+    <p>@Model.Stock Stoğunu silmek istediğinize emin misiniz?</p>
+    <button type="submit" class="btn btn-danger">Evet, Sil</button>
+    <a asp-action="Index" class="btn btn-secondary">İptal</a>
+</form>

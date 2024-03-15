@@ -1,0 +1,58 @@
+﻿@using CompanyRestaurant.MVC.Models.ViewModels.SupplierVM
+@model CreateSupplierVM
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="col-md-6">
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["Error"]
+        </div>
+    }
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Tedarikçi Oluştur</h3>
+        </div>
+        <!-- /.card-header -->
+        <!-- form start -->
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
+            <div class="card-body">
+                <div class="form-group">
+                    <label>Şirket Adı</label>
+                    <input asp-for="CompanyName" class="form-control" placeholder="Şirket adı girin">
+                    <span asp-validation-for="CompanyName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label>Adres</label>
+                    <input asp-for="Address" class="form-control" placeholder="Adres girin">
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label>Mail</label>
+                    <input asp-for="Email" class="form-control" placeholder="Mail girin">
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label>Telefon</label>
+                    <input asp-for="Phone" class="form-control" placeholder="Telefon girin">
+                    <span asp-validation-for="Phone" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label>İlgili kşi</label>
+                    <input asp-for="ContactPerson" class="form-control" placeholder="İlgili kişi girin">
+                    <span asp-validation-for="ContactPerson" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Oluştur</button>
+            </div>
+        </form>
+    </div>
+</div>
+

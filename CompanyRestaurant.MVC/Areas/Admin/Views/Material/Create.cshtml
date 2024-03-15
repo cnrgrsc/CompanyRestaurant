@@ -1,0 +1,53 @@
+﻿@using CompanyRestaurant.MVC.Models.ViewModels.MaterialVM
+@model CreateMaterialVM
+
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="col-md-6">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Malzeme Oluştur</h3>
+        </div>
+        <!-- /.card-header -->
+        <!-- form start -->
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
+            <div class="card-body">
+                <div class="form-group">
+                    <label>Ad</label>
+                    <input asp-for="MaterialName" type="text" class="form-control" placeholder="Malzeme adı girin">
+                    <span asp-validation-for="MaterialName" class="text-danger"></span>
+
+                </div>
+                <div class="form-group">
+                    <label>Fiyat</label>
+                    <input asp-for="Price" type="number" class="form-control" placeholder="Malzeme fiyatı girin">
+                    <span asp-validation-for="Price" class="text-danger"></span>
+
+                </div>
+                <div class="form-group">
+                    <label>Stok</label>
+                    <input asp-for="UnitInStock" type="number" class="form-control" placeholder="Malzeme stoğu girin">
+                    <span asp-validation-for="UnitInStock" class="text-danger"></span>
+
+                </div>
+                <div class="form-group">
+                    <label>Tedarikçi</label>
+                    <select asp-for="SupplierId" asp-items="@ViewBag.SuppliersSelect" class="form-control">
+                        <option value="">Lütfen tedarikçi Seçiniz</option>
+                    </select>
+                    <span asp-validation-for="SupplierId" class="text-danger"></span>
+                </div>
+            </div>
+            <!-- /.card-body -->
+
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Oluştur</button>
+            </div>
+        </form>
+    </div>
+</div>
+

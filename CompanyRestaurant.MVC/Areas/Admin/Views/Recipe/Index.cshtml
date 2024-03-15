@@ -1,0 +1,72 @@
+﻿@model List<Recipe>
+@{
+    ViewData["Title"] = "Reçete Listesi";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header">
+        <div class="d-flex justify-content-between">
+            <h2>@ViewData["Title"]</h2>
+            <a asp-controller="Recipe" asp-action="Create" class="btn btn-success">Reçete Ekle</a>
+        </div>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Reçete Adı</th>
+                    <th>Hizmet Durumu</th>
+                    <th>Hazırlanma Süresi</th>
+                    <th>Pişme Süresi</th>
+                    <th>Talimatlar</th>
+                    <th>Resim</th>
+                    <th>Durum</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.ID</td>
+                        <td>@item.Name</td>
+                        <td>@item.Serves</td>
+                        <td>@item.PreparationTime</td>
+                        <td>@item.CookingTime</td>
+                        <td>@item.Instructions</td>
+                        <td>
+                            <img src="/Images/Recipe" alt="recipe_img" class="" width="48" height="48" />
+
+                        </td>
+                        <td>
+                            @if (item.IsActive)
+                            {
+                                <span class="right badge badge-success">Active</span>
+                            }
+                            else
+                            {
+                                <span class="right badge badge-danger">Passive</span>
+                            }
+
+                        </td>
+                        <td>
+                            <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-primary">Sil</a>
+
+                            @*  <form asp-area="Admin" asp-controller="Category" asp-action="Delete" asp-route-id="@item.ID" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-danger">Sil</button>
+                        </form> *@
+
+
+                            <a asp-action="Update" asp-route-id="@item.ID" class="btn btn-warning">Güncelle</a>
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>
+

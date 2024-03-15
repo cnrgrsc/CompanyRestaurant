@@ -1,0 +1,74 @@
+﻿@model List<Rezervation>
+@{
+    ViewData["Title"] = "Rezervasyon Listesi";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header">
+        <div class="d-flex justify-content-between">
+            <h2>@ViewData["Title"]</h2>
+            <a asp-controller="Rezervation" asp-action="Create" class="btn btn-success">Rezervasyon Ekle</a>
+        </div>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>İsim</th>
+                    <th>Soyisim</th>
+                    <th>Telefon</th>
+                    <th>Mail</th>
+                    <th>Tarih</th>
+                    <th>Masa</th>
+                    <th>Açıklama</th>
+                    <th>Durum</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.ID</td>
+                        <td>@item.Name</td>
+                        <td>@item.Surname</td>
+                        <td>@item.PhoneNumber</td>
+                        <td>@item.Email</td>
+                        <td>@item.CreatedDate</td>
+                        <td>
+                            @foreach (var table in ViewBag.Tables as List<Table>)
+                            {
+                                if (item.TableId == table.ID)
+                                {
+                                    <span>@table.TableNo</span>
+                                }
+                            }
+
+                        </td>
+                        <td>@item.Description</td>
+                        <td>
+                            @if (item.IsActive)
+                            {
+                                <span class="right badge badge-success">Active</span>
+                            }
+                            else
+                            {
+                                <span class="right badge badge-danger">Passive</span>
+                            }
+
+                        </td>
+                        <td>
+                            <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-primary">Sil</a>
+                            <a asp-action="Update" asp-route-id="@item.ID" class="btn btn-warning">Güncelle</a>
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+

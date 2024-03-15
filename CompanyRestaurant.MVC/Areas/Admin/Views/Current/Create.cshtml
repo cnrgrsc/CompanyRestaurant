@@ -1,0 +1,80 @@
+﻿@using CompanyRestaurant.MVC.Models.ViewModels.CurrentVM;
+
+
+@model CreateCurrentVM
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="col-md-6">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Cari Oluştur</h3>
+        </div>
+        <!-- /.card-header -->
+        <!-- form start -->
+        <form method="post">
+            <div class="card-body">
+                <div class="form-group">
+                    <label>Borç</label>
+                    <input asp-for="Debit" type="number" class="form-control" placeholder="Borç girin">
+                </div>
+                <div class="form-group">
+                    <label>Alıcak</label>
+                    <input asp-for="Credit" type="number" class="form-control" placeholder="Alıcak girin">
+                </div>
+                <div class="form-group">
+                    <label>Kalan</label>
+                    <input asp-for="Balance" type="number" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Hesap Numarası</label>
+                    <input asp-for="AccountNumber" type="number" class="form-control" placeholder="Hesap numarası giriniz">
+                </div>
+
+                <div class="form-group">
+                    <label>Şirket Adı</label>
+                    <input asp-for="CompanyName" type="text" class="form-control" placeholder="Şirket adı giriniz">
+                </div>
+
+                <div class="form-group">
+                    <label>Kişi Adı</label>
+                    <input asp-for="ContactName" type="text" class="form-control" placeholder="Kişi adı giriniz">
+                </div>
+
+                <div class="form-group">
+                    <label>Kişi Mail</label>
+                    <input asp-for="ContactEmail" type="text" class="form-control" placeholder="Kişi mail giriniz">
+                </div>
+
+                <div class="form-group">
+                    <label>Kişi Telefon</label>
+                    <input asp-for="ContactPhone" type="text" class="form-control" placeholder="Kişi telefon giriniz">
+                </div>
+
+                <div class="form-group">
+                    <label>Adres</label>
+                    <input asp-for="Address" type="text" class="form-control" placeholder="Adres giriniz">
+                </div>
+
+                <div class="form-group">
+                    <label>Vergi Numarası</label>
+                    <input asp-for="TaxNumber" type="number" class="form-control" placeholder="Vergi Numarası giriniz">
+                </div>
+
+                <div class="form-group">
+                    <label>Vergi Dairesi</label>
+                    <input asp-for="TaxOffice" type="text" class="form-control" placeholder="Vergi Dairesi giriniz">
+                </div>
+            </div>
+            <!-- /.card-body -->
+
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Oluştur</button>
+            </div>
+        </form>
+    </div>
+</div>
+

@@ -1,0 +1,62 @@
+﻿@using CompanyRestaurant.MVC.Models.ViewModels.OrderVM
+@model CreateOrderVM
+
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="col-md-6">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Sipariş Oluştur</h3>
+        </div>
+        <!-- /.card-header -->
+        <!-- form start -->
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
+            <div class="card-body">
+                <div class="form-group">
+                    <label>Sipariş Adı</label>
+                    <input asp-for="OrderName" type="text" class="form-control" placeholder="Sipariş adı girin">
+                    <span asp-validation-for="OrderName" class="text-danger"></span>
+
+                </div>
+                <div class="form-group">
+                    <label>Fiyat</label>
+                    <input asp-for="Price" type="number" class="form-control" placeholder="Sipariş fiyatı girin">
+                    <span asp-validation-for="Price" class="text-danger"></span>
+
+                </div>
+                <div class="form-group">
+                    <label>Ödeme Tipi</label>
+                    <input asp-for="PaymentType" type="number" class="form-control" placeholder="Ödeme tipi girin">
+                    <span asp-validation-for="PaymentType" class="text-danger"></span>
+
+                </div>
+                <div class="form-group">
+                    <label>Masa</label>
+                    <select asp-for="TableId" asp-items="@ViewBag.TablesSelect" class="form-control">
+                        <option value="">Lütfen masa Seçiniz</option>
+                    </select>
+                    <span asp-validation-for="TableId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label>Çalışan</label>
+                    <select asp-for="EmployeeId" asp-items="@ViewBag.EmployeesSelect" class="form-control">
+                        <option value="">Lütfen çalışan Seçiniz</option>
+                    </select>
+                    <span asp-validation-for="EmployeeId" class="text-danger"></span>
+                </div>
+
+            </div>
+            <!-- /.card-body -->
+
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Oluştur</button>
+            </div>
+        </form>
+    </div>
+</div>
+

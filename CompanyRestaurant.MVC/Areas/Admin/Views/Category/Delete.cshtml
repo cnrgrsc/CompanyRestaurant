@@ -1,0 +1,14 @@
+﻿@using CompanyRestaurant.MVC.Models.ViewModels.CategoryVM;
+
+@model DeleteCategoryVM
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<form method="post">
+    <h2>@Model.CategoryName kaldırmak istediğinize emin misiniz?</h2>
+    <button type="submit" class="btn btn-danger">Evet</button>
+    <a asp-action="Index" asp-controller="Category">İptal</a>
+</form>
