@@ -2,11 +2,12 @@
 
 namespace CompanyRestaurant.MVC.Areas.Admin.Models.ViewModels.AppRoleVM
 {
-    public class CreateAppRoleVM
+    public class EditRoleVM
     {
-        [Required(ErrorMessage = "Rol adı boş geçilemez!")]
-        [Display(Name = "Rol Adı")]
-        public string RoleName { get; set; }
+        public int Id { get; set; }
+
+        [Required(ErrorMessage = "Rol adı gereklidir.")]
+        public string Name { get; set; }
         public string Description { get; set; }
     }
 }

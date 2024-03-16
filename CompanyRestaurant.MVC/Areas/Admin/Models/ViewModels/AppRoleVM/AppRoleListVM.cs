@@ -2,6 +2,6 @@
 {
     public class AppRoleListVM
     {
-        public IEnumerable<AppRoleVM> Roles { get; set; }
+        public IEnumerable<AppRoleViewModel> Roles { get; set; }
     }
 }
