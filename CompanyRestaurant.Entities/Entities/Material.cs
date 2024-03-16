@@ -1,6 +1,4 @@
 ﻿using CompanyRestaurant.Entities.Base;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
-using System.Data;
 
 namespace CompanyRestaurant.Entities.Entities
 {
@@ -8,7 +6,7 @@ namespace CompanyRestaurant.Entities.Entities
     {
         public string MaterialName { get; set; }
         public decimal Price { get; set; }
-        public short UnitInStock { get; set; }
+        public decimal UnitInStock { get; set; }
 
         // Relation Properties
         public virtual List<RecipeMaterial> RecipeMaterial { get; set; }

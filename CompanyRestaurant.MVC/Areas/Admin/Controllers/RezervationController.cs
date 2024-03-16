@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using CompanyRestaurant.BLL.Abstracts;
 using CompanyRestaurant.Entities.Entities;
+using CompanyRestaurant.MVC.Areas.Admin.Models.ViewModels.RezervationVM;
 using CompanyRestaurant.MVC.Models.ViewModels.EmployeeVM;
-using CompanyRestaurant.MVC.Models.ViewModels.RezervationVM;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 

@@ -2,7 +2,7 @@
 using CompanyRestaurant.BLL.Abstracts;
 using CompanyRestaurant.BLL.Services;
 using CompanyRestaurant.Entities.Entities;
-using CompanyRestaurant.MVC.Models.ViewModels.EmployeeVM;
+using CompanyRestaurant.MVC.Areas.Admin.Models.ViewModels.EmployeeVM;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CompanyRestaurant.MVC.Areas.Admin.Controllers

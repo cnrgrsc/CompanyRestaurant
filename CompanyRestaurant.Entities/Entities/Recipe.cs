@@ -25,11 +25,6 @@ namespace CompanyRestaurant.Entities.Entities
             RecipeMaterials = new List<RecipeMaterial>();
         }
 
-        // Toplam maliyeti hesaplayan metod
-        public void CalculateTotalCost()
-        {
-            TotalCost = RecipeMaterials.Sum(rm => rm.Material.Price * rm.Quantity);
-        }
     }
 
 }

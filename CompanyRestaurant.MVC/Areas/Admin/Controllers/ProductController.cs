@@ -2,7 +2,7 @@
 using CompanyRestaurant.BLL.Abstracts;
 using CompanyRestaurant.Common.Image;
 using CompanyRestaurant.Entities.Entities;
-using CompanyRestaurant.MVC.Models.ViewModels.ProductVM;
+using CompanyRestaurant.MVC.Areas.Admin.Models.ViewModels.ProductVM;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;

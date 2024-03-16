@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using CompanyRestaurant.Entities.Entities;
+using CompanyRestaurant.MVC.Areas.Admin.Models.ViewModels.EmployeeVM;
 using CompanyRestaurant.MVC.Models.ViewModels.CategoryVM;
-using CompanyRestaurant.MVC.Models.ViewModels.EmployeeVM;
 
 namespace CompanyRestaurant.MVC.AutoMappers
 {

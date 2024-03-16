@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using CompanyRestaurant.BLL.Abstracts;
 using CompanyRestaurant.Entities.Entities;
+using CompanyRestaurant.MVC.Areas.Admin.Models.ViewModels.TableVM;
 using CompanyRestaurant.MVC.Models.ViewModels.CategoryVM;
-using CompanyRestaurant.MVC.Models.ViewModels.TableVM;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CompanyRestaurant.MVC.Areas.Admin.Controllers

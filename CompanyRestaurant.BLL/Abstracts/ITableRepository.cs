@@ -1,13 +1,12 @@
 ﻿using CompanyRestaurant.Entities.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CompanyRestaurant.BLL.Abstracts
 {
-    public interface ITableRepository:IRepository<Table>
+    public interface ITableRepository : IRepository<Table>
     {
+        Task OpenTable(int tableId);
+        Task CloseTable(int tableId);
+        Task<IEnumerable<TableReportViewModel>> GetTableUsageReport(DateTime startDate, DateTime endDate);
     }
+
 }

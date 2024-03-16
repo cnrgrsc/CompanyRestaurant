@@ -1,9 +1,4 @@
 ﻿using CompanyRestaurant.Entities.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CompanyRestaurant.Entities.Entities
 {
@@ -14,7 +9,7 @@ namespace CompanyRestaurant.Entities.Entities
         public string ImageUrl { get; set; }
         public string Description { get; set; }
 
-
+        public int UnitInStock { get; set; } // Eğer stok miktarı ondalıklı bir değer tutacaksa, int yerine decimal kullanabilirsiniz.
         //Mapping
         public int? CategoryId { get; set; }
         public virtual Category Category { get; set; }

@@ -1,13 +1,10 @@
 ﻿using CompanyRestaurant.Entities.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CompanyRestaurant.BLL.Abstracts
 {
-    public interface IRezervationRepository:IRepository<Rezervation>
+    public interface IRezervationRepository : IRepository<Rezervation>
     {
+        Task MakeReservation(RezervationCreateViewModel reservationViewModel);
+        Task CancelReservation(int reservationId);
     }
 }

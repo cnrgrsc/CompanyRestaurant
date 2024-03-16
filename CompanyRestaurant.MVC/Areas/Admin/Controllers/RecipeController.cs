@@ -5,12 +5,12 @@ using CompanyRestaurant.Entities.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using CompanyRestaurant.MVC.Models.ViewModels.CurrentVM;
-using CompanyRestaurant.MVC.Models.ViewModels.RecipeVM;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using CompanyRestaurant.MVC.Models.ViewModels.ProductVM;
 using AutoMapper;
 using CompanyRestaurant.MVC.Models.ViewModels.EmployeeVM;
+using CompanyRestaurant.MVC.Areas.Admin.Models.ViewModels.RecipeVM;
 
 namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
 {
