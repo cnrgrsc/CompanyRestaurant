@@ -14,16 +14,19 @@ namespace CompanyRestaurant.BLL.Services
             _context = context;
         }
 
-        public async Task AddStockMovement(StockMovement stockMovement)
+        public Task<IEnumerable<StockMovementViewModel>> GetStockMovementsForPeriod(DateTime startDate, DateTime endDate)
         {
-            if (stockMovement == null)
-            {
-                throw new ArgumentNullException(nameof(stockMovement), "Stok hareketi null olamaz.");
-            }
+            throw new NotImplementedException();
+        }
 
-            // Stok hareketini ekleyin
-            await _context.StockMovements.AddAsync(stockMovement);
-            await _context.SaveChangesAsync();
+        public Task RecordStockEntry(StockMovementEntryViewModel entryViewModel)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task RecordStockExit(StockMovementExitViewModel exitViewModel)
+        {
+            throw new NotImplementedException();
         }
     }
 }

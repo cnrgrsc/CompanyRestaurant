@@ -7,11 +7,9 @@ namespace CompanyRestaurant.BLL.Services
 {
     public class AppUserRepository :BaseRepository<AppUser>, IAppUserRepository
     {
-
         public AppUserRepository(CompanyRestaurantContext context):base(context) 
         {
 
         }
-        
     }
 }

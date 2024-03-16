@@ -3,11 +3,6 @@ using CompanyRestaurant.BLL.Concretes;
 using CompanyRestaurant.DAL.Context;
 using CompanyRestaurant.Entities.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CompanyRestaurant.BLL.Services
 {
@@ -20,7 +15,7 @@ namespace CompanyRestaurant.BLL.Services
         }
 
         // Recipe'nin toplam maliyetini hesaplayan metod
-        public async Task<decimal> CalculateTotalCost(int recipeId)
+        public async Task<decimal> CalculateRecipeCost(int recipeId)
         {
             var recipe = await _context.Recipes
                                         .Include(r => r.RecipeMaterials)
@@ -37,5 +32,9 @@ namespace CompanyRestaurant.BLL.Services
             return totalCost;
         }
 
+        public Task<RecipeDetailViewModel> GetRecipeWithMaterials(int recipeId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

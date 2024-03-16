@@ -3,11 +3,6 @@ using CompanyRestaurant.BLL.Concretes;
 using CompanyRestaurant.DAL.Context;
 using CompanyRestaurant.Entities.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CompanyRestaurant.BLL.Services
 {

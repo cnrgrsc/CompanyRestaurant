@@ -2,11 +2,6 @@
 using CompanyRestaurant.BLL.Concretes;
 using CompanyRestaurant.DAL.Context;
 using CompanyRestaurant.Entities.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CompanyRestaurant.BLL.Services
 {
@@ -15,6 +10,21 @@ namespace CompanyRestaurant.BLL.Services
         public TableRepository(CompanyRestaurantContext context):base(context)
         {
             
+        }
+
+        public Task CloseTable(int tableId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<TableReportViewModel>> GetTableUsageReport(DateTime startDate, DateTime endDate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task OpenTable(int tableId)
+        {
+            throw new NotImplementedException();
         }
     }
 }
