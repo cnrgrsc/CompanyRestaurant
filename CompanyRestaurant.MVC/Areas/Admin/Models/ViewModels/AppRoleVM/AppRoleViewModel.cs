@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CompanyRestaurant.MVC.Areas.Admin.Models.ViewModels.AppRoleVM
 {
-    public class AppRoleVM
+    public class AppRoleViewModel
     {
         public int Id { get; set; } // Role unique ID
         [Required(ErrorMessage = "Rol adı zorunludur.")]

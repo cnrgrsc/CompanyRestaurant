@@ -1,20 +1,11 @@
-using CompanyRestaurant.BLL.Abstracts;
-using CompanyRestaurant.BLL.Concretes;
-using CompanyRestaurant.BLL.Services;
 using CompanyRestaurant.IOC.DependecyResolvers;
-using CompanyRestaurant.Entities.Entities;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System.Globalization;
-using CompanyRestaurant.DAL.Context;
 using CompanyRestaurant.MVC.AutoMappers;
-using CompanyRestaurant.MVC.AutoMapperInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddMapperService();
+//builder.Services.AddMapperService();
 
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 // Add services to the container.
 

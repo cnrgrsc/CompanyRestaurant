@@ -12,7 +12,7 @@ namespace CompanyRestaurant.BLL.Services
             
         }
 
-        public Task<IEnumerable<SalesReportViewModel>> GenerateSalesReport(DateTime startDate, DateTime endDate)
+        public Task<IEnumerable<Order>> GenerateSalesReport(DateTime startDate, DateTime endDate)
         {
             throw new NotImplementedException();
         }

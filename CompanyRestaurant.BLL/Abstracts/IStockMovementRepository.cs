@@ -4,8 +4,9 @@ namespace CompanyRestaurant.BLL.Abstracts
 {
     public interface IStockMovementRepository : IRepository<StockMovement>
     {
-        Task RecordStockEntry(StockMovementEntryViewModel entryViewModel);
-        Task RecordStockExit(StockMovementExitViewModel exitViewModel);
-        Task<IEnumerable<StockMovementViewModel>> GetStockMovementsForPeriod(DateTime startDate, DateTime endDate);
+        Task RecordStockEntry(StockMovement entry); // ViewModel yerine doğrudan entity alacak şekilde güncellendi.
+        Task RecordStockExit(StockMovement exit); // ViewModel yerine doğrudan entity alacak şekilde güncellendi.
+        Task<IEnumerable<StockMovement>> GetStockMovementsForPeriod(DateTime startDate, DateTime endDate);
     }
 }
+

@@ -2,7 +2,7 @@
 
 namespace CompanyRestaurant.MVC.Areas.Admin.Models.ViewModels.AppUserVM
 {
-    public class AppUserVM
+    public class AppUserViewModel
     {
         public string Id { get; set; } // Kullanıcının benzersiz kimliği
         [Required(ErrorMessage = "Kullanıcı adı zorunludur.")]
@@ -29,7 +29,7 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Models.ViewModels.AppUserVM
         [Display(Name = "Şifre")]
         public string Password { get; set; } // Kullanıcı şifresi
 
-        public AppUserVM()
+        public AppUserViewModel()
         {
             Roles = new List<string>();
         }

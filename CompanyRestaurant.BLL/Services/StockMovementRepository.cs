@@ -14,17 +14,17 @@ namespace CompanyRestaurant.BLL.Services
             _context = context;
         }
 
-        public Task<IEnumerable<StockMovementViewModel>> GetStockMovementsForPeriod(DateTime startDate, DateTime endDate)
+        public Task<IEnumerable<StockMovement>> GetStockMovementsForPeriod(DateTime startDate, DateTime endDate)
         {
             throw new NotImplementedException();
         }
 
-        public Task RecordStockEntry(StockMovementEntryViewModel entryViewModel)
+        public Task RecordStockEntry(StockMovement entry)
         {
             throw new NotImplementedException();
         }
 
-        public Task RecordStockExit(StockMovementExitViewModel exitViewModel)
+        public Task RecordStockExit(StockMovement exit)
         {
             throw new NotImplementedException();
         }

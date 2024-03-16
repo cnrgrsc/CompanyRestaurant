@@ -17,7 +17,7 @@ namespace CompanyRestaurant.BLL.Services
             throw new NotImplementedException();
         }
 
-        public Task MakeReservation(RezervationCreateViewModel reservationViewModel)
+        public Task MakeReservation(Rezervation reservation)
         {
             throw new NotImplementedException();
         }

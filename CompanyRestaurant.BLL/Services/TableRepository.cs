@@ -17,7 +17,7 @@ namespace CompanyRestaurant.BLL.Services
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<TableReportViewModel>> GetTableUsageReport(DateTime startDate, DateTime endDate)
+        public Task<IEnumerable<Table>> GetTableUsageReport(DateTime startDate, DateTime endDate)
         {
             throw new NotImplementedException();
         }

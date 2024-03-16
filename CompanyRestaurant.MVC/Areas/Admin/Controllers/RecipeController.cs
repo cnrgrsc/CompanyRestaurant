@@ -1,16 +1,8 @@
-﻿using CompanyRestaurant.BLL.Abstracts;
-using CompanyRestaurant.BLL.Services;
-using CompanyRestaurant.Common.Image;
+﻿using AutoMapper;
+using CompanyRestaurant.BLL.Abstracts;
 using CompanyRestaurant.Entities.Entities;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
-using CompanyRestaurant.MVC.Models.ViewModels.CurrentVM;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using CompanyRestaurant.MVC.Models.ViewModels.ProductVM;
-using AutoMapper;
-using CompanyRestaurant.MVC.Models.ViewModels.EmployeeVM;
 using CompanyRestaurant.MVC.Areas.Admin.Models.ViewModels.RecipeVM;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
 {

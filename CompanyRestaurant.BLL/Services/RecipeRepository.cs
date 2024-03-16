@@ -14,27 +14,33 @@ namespace CompanyRestaurant.BLL.Services
             _context = context;
         }
 
-        // Recipe'nin toplam maliyetini hesaplayan metod
-        public async Task<decimal> CalculateRecipeCost(int recipeId)
-        {
-            var recipe = await _context.Recipes
-                                        .Include(r => r.RecipeMaterials)
-                                        .ThenInclude(rm => rm.Material)
-                                        .FirstOrDefaultAsync(r => r.ID == recipeId);
-
-            if (recipe == null)
-            {
-                throw new ArgumentException("Recipe not found");
-            }
-
-            decimal totalCost = recipe.RecipeMaterials.Sum(rm => rm.Material.Price * rm.Quantity);
-
-            return totalCost;
-        }
-
-        public Task<RecipeDetailViewModel> GetRecipeWithMaterials(int recipeId)
+        public Task<decimal> CalculateRecipeCost(int recipeId)
         {
             throw new NotImplementedException();
         }
+
+        public Task<Recipe> GetRecipeWithMaterials(int recipeId)
+        {
+            throw new NotImplementedException();
+        }
+
+        //// Recipe'nin toplam maliyetini hesaplayan metod
+        //public async Task<decimal> CalculateRecipeCost(int recipeId)
+        //{
+        //    var recipe = await _context.Recipes
+        //                                .Include(r => r.RecipeMaterials)
+        //                                .ThenInclude(rm => rm.Material)
+        //                                .FirstOrDefaultAsync(r => r.ID == recipeId);
+
+        //    if (recipe == null)
+        //    {
+        //        throw new ArgumentException("Recipe not found");
+        //    }
+
+        //    decimal totalCost = recipe.RecipeMaterials.Sum(rm => rm.Material.Price * rm.Quantity);
+
+        //    return totalCost;
+        //}
+
     }
 }

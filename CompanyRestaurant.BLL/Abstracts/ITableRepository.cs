@@ -6,7 +6,8 @@ namespace CompanyRestaurant.BLL.Abstracts
     {
         Task OpenTable(int tableId);
         Task CloseTable(int tableId);
-        Task<IEnumerable<TableReportViewModel>> GetTableUsageReport(DateTime startDate, DateTime endDate);
+        Task<IEnumerable<Table>> GetTableUsageReport(DateTime startDate, DateTime endDate); // ViewModel yerine doğrudan entity dönüş tipi.
     }
-
 }
+
+

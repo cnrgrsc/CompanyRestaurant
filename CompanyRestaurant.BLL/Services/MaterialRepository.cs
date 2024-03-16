@@ -14,33 +14,50 @@ namespace CompanyRestaurant.BLL.Services
             _context = context;
         }
 
-        public async Task AddMaterialStock(int materialId, decimal quantity)
-        {
-            var material = await _context.Materials.FirstOrDefaultAsync(m => m.ID == materialId);
-            if (material == null)
-            {
-                throw new Exception("Material not found.");
-            }
+        //public async Task AddMaterialStock(int materialId, decimal quantity)
+        //{
+        //    var material = await _context.Materials.FirstOrDefaultAsync(m => m.ID == materialId);
+        //    if (material == null)
+        //    {
+        //        throw new Exception("Material not found.");
+        //    }
 
-            material.UnitInStock += (short)quantity;
-            await _context.SaveChangesAsync();
+        //    material.UnitInStock += (short)quantity;
+        //    await _context.SaveChangesAsync();
+        //}
+
+        public Task<IEnumerable<Material>> GenerateStockReport()
+        {
+            throw new NotImplementedException();
         }
 
-        public async Task ReduceMaterialStock(int materialId, decimal quantity)
+        public Task<IEnumerable<Material>> GetMaterialsForRecipe(int recipeId)
         {
-            var material = await _context.Materials.FirstOrDefaultAsync(m => m.ID == materialId);
-            if (material == null)
-            {
-                throw new Exception("Material not found.");
-            }
-
-            if (material.UnitInStock < quantity)
-            {
-                throw new Exception("Insufficient stock.");
-            }
-
-            material.UnitInStock -= (short)quantity;
-            await _context.SaveChangesAsync();
+            throw new NotImplementedException();
         }
+
+        public Task<decimal> GetMaterialStockLevel(int materialId)
+        {
+            throw new NotImplementedException();
+        }
+
+        //public async Task ReduceMaterialStock(int materialId, decimal quantity)
+        //{
+        //    var material = await _context.Materials.FirstOrDefaultAsync(m => m.ID == materialId);
+        //    if (material == null)
+        //    {
+        //        throw new Exception("Material not found.");
+        //    }
+
+        //    if (material.UnitInStock < quantity)
+        //    {
+        //        throw new Exception("Insufficient stock.");
+        //    }
+
+        //    material.UnitInStock -= (short)quantity;
+        //    await _context.SaveChangesAsync();
+        //}
+
+       
     }
 }

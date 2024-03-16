@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CompanyRestaurant.MVC.Areas.Admin.Models.ViewModels.RecipeMaterialVM;
+using System.ComponentModel.DataAnnotations;
 
 namespace CompanyRestaurant.MVC.Areas.Admin.Models.ViewModels.RecipeVM
 {

@@ -16,5 +16,10 @@ namespace CompanyRestaurant.BLL.Services
         {
             
         }
+
+        public Task<IEnumerable<Employee>> GetAllEmployeePerformances()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

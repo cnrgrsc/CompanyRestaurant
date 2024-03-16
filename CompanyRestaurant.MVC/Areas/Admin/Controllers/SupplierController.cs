@@ -2,7 +2,6 @@
 using CompanyRestaurant.BLL.Abstracts;
 using CompanyRestaurant.Entities.Entities;
 using CompanyRestaurant.MVC.Areas.Admin.Models.ViewModels.SupplierVM;
-using CompanyRestaurant.MVC.Models.ViewModels.CategoryVM;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CompanyRestaurant.MVC.Areas.Admin.Controllers

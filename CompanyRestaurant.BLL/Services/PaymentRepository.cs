@@ -13,12 +13,12 @@ namespace CompanyRestaurant.BLL.Services
             _context = context;
         }
 
-        public Task<IEnumerable<PaymentViewModel>> GetPaymentsForOrder(int orderId)
+        public Task<IEnumerable<Payment>> GetPaymentsForOrder(int orderId)
         {
             throw new NotImplementedException();
         }
 
-        public Task RecordPayment(PaymentCreateViewModel paymentViewModel)
+        public Task RecordPayment(Payment payment)
         {
             throw new NotImplementedException();
         }

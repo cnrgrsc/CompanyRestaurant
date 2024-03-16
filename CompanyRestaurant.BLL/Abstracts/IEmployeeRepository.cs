@@ -4,6 +4,6 @@ namespace CompanyRestaurant.BLL.Abstracts
 {
     public interface IEmployeeRepository : IRepository<Employee>
     {
-        Task<IEnumerable<EmployeePerformanceViewModel>> GetAllEmployeePerformances();
+        Task<IEnumerable<Employee>> GetAllEmployeePerformances();
     }
 }
