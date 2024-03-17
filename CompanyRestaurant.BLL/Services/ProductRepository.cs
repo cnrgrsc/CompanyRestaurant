@@ -2,44 +2,34 @@
 using CompanyRestaurant.BLL.Concretes;
 using CompanyRestaurant.DAL.Context;
 using CompanyRestaurant.Entities.Entities;
-using Microsoft.EntityFrameworkCore;
 
 namespace CompanyRestaurant.BLL.Services
 {
-    public class ProductRepository:BaseRepository<Product>,IProductRepository
+    public class ProductRepository : BaseRepository<Product>, IProductRepository
     {
         private readonly CompanyRestaurantContext _context;
-        public ProductRepository(CompanyRestaurantContext context):base(context)
+
+        public ProductRepository(CompanyRestaurantContext context) : base(context)
         {
             _context = context;
         }
-        public async Task SellProduct(int productId, int quantity, decimal price)
+
+        public async Task SellProduct(int productId, int quantity)
         {
-            var product = await _context.Products.FirstOrDefaultAsync(p => p.ID == productId);
+            var product = await _context.Products.FindAsync(productId);
             if (product == null)
             {
-                throw new Exception("Ürün bulunamadı.");
+                throw new ArgumentException("Product not found");
             }
 
             if (product.UnitInStock < quantity)
             {
-                throw new Exception("Yeterli stok bulunmamaktadır.");
+                throw new InvalidOperationException("Insufficient stock for the product");
             }
 
-            // Stok miktarını azalt
-            product.UnitInStock -= quantity;
-            await _context.SaveChangesAsync();
-
-            // Yeni bir sipariş oluştur (Örnek olarak, daha fazla detay gerekebilir)
-            var newOrder = new Order
-            {
-                // Sipariş detayları
-                Price = quantity * price,
-                // Diğer gerekli alanlar ve ilişkiler
-            };
-
-            _context.Orders.Add(newOrder);
+            product.UnitInStock -= quantity; // Stoktan düşür
             await _context.SaveChangesAsync();
         }
     }
+
 }

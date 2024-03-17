@@ -2,6 +2,8 @@
 using CompanyRestaurant.BLL.Concretes;
 using CompanyRestaurant.DAL.Context;
 using CompanyRestaurant.Entities.Entities;
+using CompanyRestaurant.Entities.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace CompanyRestaurant.BLL.Services
 {
@@ -14,19 +16,29 @@ namespace CompanyRestaurant.BLL.Services
             _context = context;
         }
 
-        public Task<IEnumerable<StockMovement>> GetStockMovementsForPeriod(DateTime startDate, DateTime endDate)
+        public async Task RecordStockEntry(StockMovement entry)
         {
-            throw new NotImplementedException();
+            // Giriş stok hareketini kaydet
+            entry.MovementType = StockMovementType.Entry; // Giriş tipini ayarla
+            await _context.StockMovements.AddAsync(entry);
+            await _context.SaveChangesAsync();
         }
 
-        public Task RecordStockEntry(StockMovement entry)
+        public async Task RecordStockExit(StockMovement exit)
         {
-            throw new NotImplementedException();
+            // Çıkış stok hareketini kaydet
+            exit.MovementType = StockMovementType.Exit; // Çıkış tipini ayarla
+            await _context.StockMovements.AddAsync(exit);
+            await _context.SaveChangesAsync();
         }
 
-        public Task RecordStockExit(StockMovement exit)
+        public async Task<IEnumerable<StockMovement>> GetStockMovementsForPeriod(DateTime startDate, DateTime endDate)
         {
-            throw new NotImplementedException();
+            // Belirli bir tarih aralığında gerçekleşen stok hareketlerini getir
+            return await _context.StockMovements
+                                 .Where(movement => movement.MovementDate >= startDate && movement.MovementDate <= endDate)
+                                 .ToListAsync();
         }
     }
+
 }

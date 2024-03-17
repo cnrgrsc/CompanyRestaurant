@@ -1,61 +1,33 @@
-﻿@model List<Category>
+﻿@model IEnumerable<CompanyRestaurant.MVC.Models.ViewModels.CategoryVM.CategoryViewModel>
+
 @{
-    ViewData["Title"] = "Kategori Listesi";
+    ViewData["Title"] = "Categories";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<div class="card">
-    <div class="card-header">
-        <div class="d-flex justify-content-between">
-            <h2>@ViewData["Title"]</h2>
-            <a asp-controller="Category" asp-action="Create" class="btn btn-success">Kategori Ekle</a>
-        </div>
-    </div>
-    <div class="card-body">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Kategori Adı</th>
-                    <th>Açıklaması</th>
-                    <th>Durum</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@item.ID</td>
-                        <td>@item.CategoryName</td>
-                        <td>@item.Description</td>
-                        <td>
-                            @if (item.IsActive)
-                            {
-                                <span class="right badge badge-success">Active</span>
-                            }
-                            else
-                            {
-                                <span class="right badge badge-danger">Passive</span>
-                            }
+<h2>Categories</h2>
 
-                        </td>
-                        <td>
-                            <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-primary">Sil</a> 
+<table class="table">
+    <thead>
+        <tr>
+            <th>Category Name</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.CategoryName</td>
+                <td>@item.Description</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
 
-                           @*  <form asp-area="Admin" asp-controller="Category" asp-action="Delete" asp-route-id="@item.ID" method="post" class="d-inline">
-                                <button type="submit" class="btn btn-danger">Sil</button>
-                            </form> *@
-
-
-                            <a asp-action="Update" asp-route-id="@item.ID" class="btn btn-warning">Güncelle</a>
-                        </td>
-
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-
-</div>
-
+<a asp-action="Create">Create New</a>

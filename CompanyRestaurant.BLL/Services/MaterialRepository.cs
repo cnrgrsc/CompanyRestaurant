@@ -6,58 +6,40 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CompanyRestaurant.BLL.Services
 {
-    public class MaterialRepository:BaseRepository<Material>,IMaterialRepository
+    public class MaterialRepository : BaseRepository<Material>, IMaterialRepository
     {
         private readonly CompanyRestaurantContext _context;
-        public MaterialRepository(CompanyRestaurantContext context):base(context)
+
+        public MaterialRepository(CompanyRestaurantContext context) : base(context)
         {
             _context = context;
         }
 
-        //public async Task AddMaterialStock(int materialId, decimal quantity)
-        //{
-        //    var material = await _context.Materials.FirstOrDefaultAsync(m => m.ID == materialId);
-        //    if (material == null)
-        //    {
-        //        throw new Exception("Material not found.");
-        //    }
-
-        //    material.UnitInStock += (short)quantity;
-        //    await _context.SaveChangesAsync();
-        //}
-
-        public Task<IEnumerable<Material>> GenerateStockReport()
+        public async Task<decimal> GetMaterialStockLevel(int materialId)
         {
-            throw new NotImplementedException();
+            var material = await _context.Materials.FindAsync(materialId);
+            return material != null ? material.UnitInStock : 0;
         }
 
-        public Task<IEnumerable<Material>> GetMaterialsForRecipe(int recipeId)
+        public async Task<IEnumerable<Material>> GenerateStockReport()
         {
-            throw new NotImplementedException();
+            // Örnek olarak, stok miktarı 10'un altındaki malzemeleri filtreleyelim.
+            // Gerçek bir senaryoda, bu eşik değeri bir konfigürasyon dosyasından veya kullanıcı girişinden alınabilir.
+            const decimal stockThreshold = 10;
+            return await _context.Materials
+                                  .Where(m => m.UnitInStock < stockThreshold)
+                                  .ToListAsync();
         }
 
-        public Task<decimal> GetMaterialStockLevel(int materialId)
+        public async Task<IEnumerable<Material>> GetMaterialsForRecipe(int recipeId)
         {
-            throw new NotImplementedException();
+            // Bu metod, belirli bir reçete için gerekli olan malzemelerin listesini döndürür.
+            var materials = await _context.RecipeMaterials
+                                           .Where(rm => rm.RecipeID == recipeId)
+                                           .Include(rm => rm.Material)
+                                           .Select(rm => rm.Material)
+                                           .ToListAsync();
+            return materials;
         }
-
-        //public async Task ReduceMaterialStock(int materialId, decimal quantity)
-        //{
-        //    var material = await _context.Materials.FirstOrDefaultAsync(m => m.ID == materialId);
-        //    if (material == null)
-        //    {
-        //        throw new Exception("Material not found.");
-        //    }
-
-        //    if (material.UnitInStock < quantity)
-        //    {
-        //        throw new Exception("Insufficient stock.");
-        //    }
-
-        //    material.UnitInStock -= (short)quantity;
-        //    await _context.SaveChangesAsync();
-        //}
-
-       
     }
 }

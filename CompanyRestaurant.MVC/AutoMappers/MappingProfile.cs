@@ -9,8 +9,11 @@ using CompanyRestaurant.MVC.Areas.Admin.Models.ViewModels.EmployeeVM;
 using CompanyRestaurant.MVC.Areas.Admin.Models.ViewModels.MaterialPriceVM;
 using CompanyRestaurant.MVC.Areas.Admin.Models.ViewModels.MaterialVM;
 using CompanyRestaurant.MVC.Areas.Admin.Models.ViewModels.OrderVM;
+using CompanyRestaurant.MVC.Areas.Admin.Models.ViewModels.PaymentVM;
 using CompanyRestaurant.MVC.Areas.Admin.Models.ViewModels.PerformanceReviewVM;
+using CompanyRestaurant.MVC.Areas.Admin.Models.ViewModels.ProductOrderVM;
 using CompanyRestaurant.MVC.Areas.Admin.Models.ViewModels.ProductVM;
+using CompanyRestaurant.MVC.Areas.Admin.Models.ViewModels.RecipeMaterialVM;
 using CompanyRestaurant.MVC.Areas.Admin.Models.ViewModels.RecipeVM;
 using CompanyRestaurant.MVC.Areas.Admin.Models.ViewModels.RezervationVM;
 using CompanyRestaurant.MVC.Areas.Admin.Models.ViewModels.StockMovementVM;
@@ -25,25 +28,54 @@ namespace CompanyRestaurant.MVC.AutoMappers
         public MappingProfile()
         {
             // Entity'den ViewModel'e
-            CreateMap<AppRole, AppRoleViewModel>().ReverseMap();
-            CreateMap<AppUser, AppUserViewModel>().ReverseMap();
-            // Diğer ViewModel'ler için CreateMap metotları...
-            CreateMap<Category, CategoryViewModel>().ReverseMap();
-            CreateMap<Current, CurrentViewModel>().ReverseMap();
-            CreateMap<Customer, CustomerViewModel>().ReverseMap();
-            CreateMap<Employee, EmployeeViewModel>().ReverseMap();
-            CreateMap<Material, MaterialViewModel>().ReverseMap();
-            CreateMap<MaterialPrice, MaterialPriceViewModel>().ReverseMap();
-            CreateMap<Order, OrderViewModel>().ReverseMap();
-            CreateMap<PerformanceReview, PerformanceReviewViewModel>().ReverseMap();
-            CreateMap<Product, ProductViewModel>().ReverseMap();
-            CreateMap<Recipe, RecipeViewModel>().ReverseMap();
-            CreateMap<Rezervation, RezervationViewModel>().ReverseMap();
-            CreateMap<StockMovement, StockMovementViewModel>().ReverseMap();
-            CreateMap<Supplier, SupplierViewModel>().ReverseMap();
-            CreateMap<Table, TableViewModel>().ReverseMap();
-            CreateMap<UnitStock, UnitStockViewModel>().ReverseMap();
-            // Diğer eşlemeler buraya eklenebilir...
+            CreateMap<AppRole, AppRoleViewModel>();
+            CreateMap<AppUser, AppUserViewModel>();
+            CreateMap<Category, CategoryViewModel>();
+            CreateMap<Current, CurrentViewModel>();
+            CreateMap<Customer, CustomerViewModel>();
+            //CreateMap<Dashboard, DashboardViewModel>();
+            CreateMap<Employee, EmployeeViewModel>();
+            CreateMap<MaterialPrice, MaterialPriceViewModel>();
+            CreateMap<Material, MaterialViewModel>();
+            CreateMap<Order, OrderViewModel>();
+            CreateMap<Payment, PaymentViewModel>();
+            CreateMap<PerformanceReview, PerformanceReviewViewModel>();
+            CreateMap<ProductOrder, ProductOrderViewModel>();
+            CreateMap<Product, ProductViewModel>();
+            CreateMap<RecipeMaterial, RecipeMaterialViewModel>();
+            CreateMap<Recipe, RecipeViewModel>();
+            CreateMap<Rezervation, RezervationViewModel>();
+            CreateMap<StockMovement, StockMovementViewModel>();
+            CreateMap<Supplier, SupplierViewModel>();
+            CreateMap<Table, TableViewModel>();
+            CreateMap<UnitStock, UnitStockViewModel>();
+            //CreateMap<RolePermissions, RolePermissionsViewModel>(); // Varsayılan bir RolePermissions entity'niz yoksa, bu satır düzenlenmelidir.
+            //CreateMap<Permission, PermissionViewModel>(); // Varsayılan bir Permission entity'niz yoksa, bu satır düzenlenmelidir.
+
+            // ViewModel'den Entity'e (Eğer gerekliyse)
+            CreateMap<AppRoleViewModel, AppRole>();
+            CreateMap<AppUserViewModel, AppUser>();
+            CreateMap<CategoryViewModel, Category>();
+            CreateMap<CurrentViewModel, Current>();
+            CreateMap<CustomerViewModel, Customer>();
+            //CreateMap<DashboardViewModel, Dashboard>(); // Dashboard için bir entity'niz yoksa, bu satırı kaldırın veya düzenleyin.
+            CreateMap<EmployeeViewModel, Employee>();
+            CreateMap<MaterialPriceViewModel, MaterialPrice>();
+            CreateMap<MaterialViewModel, Material>();
+            CreateMap<OrderViewModel, Order>();
+            CreateMap<PaymentViewModel, Payment>();
+            CreateMap<PerformanceReviewViewModel, PerformanceReview>();
+            CreateMap<ProductOrderViewModel, ProductOrder>();
+            CreateMap<ProductViewModel, Product>();
+            CreateMap<RecipeMaterialViewModel, RecipeMaterial>();
+            CreateMap<RecipeViewModel, Recipe>();
+            CreateMap<RezervationViewModel, Rezervation>();
+            CreateMap<StockMovementViewModel, StockMovement>();
+            CreateMap<SupplierViewModel, Supplier>();
+            CreateMap<TableViewModel, Table>();
+            CreateMap<UnitStockViewModel, UnitStock>();
+            //CreateMap<RolePermissionsViewModel, RolePermissions>(); // Varsayılan bir RolePermissions entity'niz yoksa, bu satır düzenlenmelidir.
+            //CreateMap<PermissionViewModel, Permission>(); // Varsayılan bir Permission entity'niz yoksa, bu satır düzenlenmelidir.
         }
     }
 }

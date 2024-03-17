@@ -1,4 +1,5 @@
 ﻿using CompanyRestaurant.Entities.Entities;
+using System.Threading.Tasks;
 
 namespace CompanyRestaurant.BLL.Abstracts
 {
@@ -7,7 +8,6 @@ namespace CompanyRestaurant.BLL.Abstracts
         Task<decimal> GetMaterialStockLevel(int materialId);
         Task<IEnumerable<Material>> GenerateStockReport();
         Task<IEnumerable<Material>> GetMaterialsForRecipe(int recipeId);
-        //Task<SuggestMaterialOrder> SuggestMaterialOrders(int recipeId); // Bu kısmın dönüş tipini detaylandırmak gerekebilir, örneğin bir DTO veya başka bir entity tipi.
     }
 
 }

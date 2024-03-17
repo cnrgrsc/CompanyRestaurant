@@ -29,7 +29,7 @@ namespace CompanyRestaurant.IOC.DependecyResolvers
             services.AddScoped<IRezervationRepository, RezervationRepository>();
             services.AddScoped<ISupplierRepository, SupplierRepository>();
             services.AddScoped<ITableRepository, TableRepository>();
-            services.AddScoped<IUnitStockRepoistory, UnitStockRepository>();
+            services.AddScoped<IUnitStockRepository, UnitStockRepository>();
 
             return services;
         }

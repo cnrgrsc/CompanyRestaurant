@@ -5,21 +5,36 @@ using CompanyRestaurant.Entities.Entities;
 
 namespace CompanyRestaurant.BLL.Services
 {
-    public class RezervationRepository:BaseRepository<Rezervation>,IRezervationRepository
+    public class RezervationRepository : BaseRepository<Rezervation>, IRezervationRepository
     {
-        public RezervationRepository(CompanyRestaurantContext context):base(context)
+        private readonly CompanyRestaurantContext _context;
+
+        public RezervationRepository(CompanyRestaurantContext context) : base(context)
         {
-            
+            _context = context;
         }
 
-        public Task CancelReservation(int reservationId)
+        public async Task MakeReservation(Rezervation reservation)
         {
-            throw new NotImplementedException();
+            // Doğrudan Rezervation entity'sini kullanarak yeni bir rezervasyon ekler
+            await _context.Rezervations.AddAsync(reservation);
+            await _context.SaveChangesAsync();
         }
 
-        public Task MakeReservation(Rezervation reservation)
+        public async Task CancelReservation(int reservationId)
         {
-            throw new NotImplementedException();
+            // Belirtilen ID'ye sahip rezervasyonu bul ve sil
+            var reservation = await _context.Rezervations.FindAsync(reservationId);
+            if (reservation != null)
+            {
+                _context.Rezervations.Remove(reservation);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                throw new ArgumentException("Reservation not found");
+            }
         }
     }
+
 }

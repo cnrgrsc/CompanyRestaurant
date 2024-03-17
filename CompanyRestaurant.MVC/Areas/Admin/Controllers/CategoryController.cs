@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using CompanyRestaurant.BLL.Abstracts;
 using CompanyRestaurant.Entities.Entities;
-using CompanyRestaurant.Entities.Enums;
 using CompanyRestaurant.MVC.Areas.Admin.Models.ViewModels.CategoryVM;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,10 +17,12 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
             _categoryRepository = categoryRepository;
             _mapper = mapper;
         }
+
         public async Task<IActionResult> Index()
         {
             var categories = await _categoryRepository.GetAll();
-            return View(categories);
+            var model = _mapper.Map<IEnumerable<CategoryViewModel>>(categories);
+            return View(model);
         }
 
         public IActionResult Create()
@@ -30,69 +31,45 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateCategoryVM model)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(CategoryViewModel model)
         {
             if (ModelState.IsValid)
             {
                 var category = _mapper.Map<Category>(model);
-
-                var result = await _categoryRepository.Create(category);
-                TempData["Result"] = result;
-                return RedirectToAction("Index");
+                await _categoryRepository.Create(category);
+                return RedirectToAction(nameof(Index));
             }
-
             return View(model);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Update(int id)
+        public async Task<IActionResult> Edit(int id)
         {
             var category = await _categoryRepository.GetById(id);
-            if (category == null)
-            {
-                return NotFound();
-            }
-
-            UpdateCategoryVM updateCategoryVM = _mapper.Map<UpdateCategoryVM>(category);
-            return View(updateCategoryVM);
+            if (category == null) return NotFound();
+            var model = _mapper.Map<CategoryViewModel>(category);
+            return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(UpdateCategoryVM model)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(CategoryViewModel model)
         {
             if (ModelState.IsValid)
             {
                 var category = _mapper.Map<Category>(model);
-
-                var result = await _categoryRepository.Update(category);
-                if (result.Contains("Güncellendi"))
-                {
-                    TempData["Result"] = result;
-                    return RedirectToAction("Index");
-                }
-                ModelState.AddModelError(string.Empty, "Bir hata oluştu: " + result);
+                await _categoryRepository.Update(category);
+                return RedirectToAction(nameof(Index));
             }
             return View(model);
         }
 
-        // GET metodu, silme onay sayfasını gösterir
-        [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
             var category = await _categoryRepository.GetById(id);
-            DeleteCategoryVM deleteCategoryVM = _mapper.Map<DeleteCategoryVM>(category);
-            return View(deleteCategoryVM);
+            if (category == null) return NotFound();
+            await _categoryRepository.Delete(category);
+            return RedirectToAction(nameof(Index));
         }
-
-        // POST metodu, silme işlemini gerçekleştirir
-        [HttpPost, ActionName("Delete")]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var category = await _categoryRepository.GetById(id);
-            await _categoryRepository.Destroy(category);
-            TempData["Message"] = "Kategori başarıyla silindi.";
-            return RedirectToAction("Index");
-        }
-
     }
 }

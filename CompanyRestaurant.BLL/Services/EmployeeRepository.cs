@@ -2,24 +2,31 @@
 using CompanyRestaurant.BLL.Concretes;
 using CompanyRestaurant.DAL.Context;
 using CompanyRestaurant.Entities.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace CompanyRestaurant.BLL.Services
 {
     public class EmployeeRepository:BaseRepository<Employee>,IEmployeeRepository
     {
+        private readonly CompanyRestaurantContext _context;
         public EmployeeRepository(CompanyRestaurantContext context):base(context)
         {
-            
+            _context = context;
         }
 
-        public Task<IEnumerable<Employee>> GetAllEmployeePerformances()
+        public async Task<IEnumerable<Employee>> GetAllEmployeePerformances()
         {
-            throw new NotImplementedException();
+            // Performans değerlendirmelerini Employee ile birlikte çekmek için
+            // Örnek olarak, Employee ve PerformanceReview modelleriniz arasında bir ilişki varsa:
+            var employeesWithPerformance = await _context.Employees
+                                                          .Include(emp => emp.PerformanceReviews)
+                                                          .ToListAsync();
+
+            return employeesWithPerformance;
+
+            // Not: Bu kod, Employee entity'nizin PerformanceReview ile ilişkili olduğunu varsayar.
+            // İlişkiniz farklı bir yapıdaysa (örneğin farklı tablolar veya ilişkiler kullanıyorsanız),
+            // bu sorguyu ilişkinize uygun olarak düzenlemeniz gerekecektir.
         }
     }
 }
