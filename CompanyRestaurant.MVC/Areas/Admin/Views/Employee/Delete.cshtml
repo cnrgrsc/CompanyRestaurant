@@ -1,28 +1,40 @@
-﻿@    using CompanyRestaurant.MVC.Models.ViewModels.EmployeeVM;
-    using CompanyRestaurant.MVC.Areas.Admin.Models.ViewModels.EmployeeVM
-
-@model DeleteEmployeeVM
+﻿@model CompanyRestaurant.Models.EmployeeViewModel
 
 @{
-    ViewData["Title"] = "Delete Employee";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Çalışanı Sil";
 }
 
-<h3>@Model.Name @Model.Surname Sil</h3>
+<h2>@ViewData["Title"]</h2>
 
-<!-- Ürün bilgilerini göster -->
+<div class="alert alert-danger" role="alert">
+    <h4 class="alert-heading">Uyarı!</h4>
+    <p>Bu işlemi gerçekleştirdiğinizde, aşağıdaki çalışanın tüm bilgileri kalıcı olarak silinecektir. Bu işlem geri alınamaz.</p>
+    <hr>
+    <p class="mb-0">Lütfen silmek istediğinize emin olun.</p>
+</div>
+
 <div>
-    <p>Adı: @Model.Name</p>
-    <p>Soyadı: @Model.Surname</p>
-    <p>Ünvanı: @Model.Title</p>
-    <p>TC: @Model.TC</p>
-    <p>Telefon: @Model.Phone</p>
-    <p>Aktif: @(Model.IsActive ? "Evet" : "Hayır")</p>
+    <h4>Çalışan Bilgileri</h4>
+    <dl class="row">
+        <dt class="col-sm-4">Adı</dt>
+        <dd class="col-sm-8">@Model.Name</dd>
+
+        <dt class="col-sm-4">Soyadı</dt>
+        <dd class="col-sm-8">@Model.Surname</dd>
+
+        <dt class="col-sm-4">Unvan</dt>
+        <dd class="col-sm-8">@Model.Title</dd>
+
+        <dt class="col-sm-4">Telefon Numarası</dt>
+        <dd class="col-sm-8">@Model.Phone</dd>
+
+        <dt class="col-sm-4">E-Posta</dt>
+        <dd class="col-sm-8">@Model.Email</dd>
+    </dl>
 </div>
 
 <form asp-action="Delete" method="post">
-    <input type="hidden" name="id" value="@Model.Id" />
-    <p>@Model.Name @Model.Surname Kişisini silmek istediğinize emin misiniz?</p>
-    <button type="submit" class="btn btn-danger">Evet, Sil</button>
-    <a asp-action="Index" class="btn btn-secondary">İptal</a>
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Sil</button>
+    <a href="@Url.Action("Index")" class="btn btn-secondary">İptal</a>
 </form>

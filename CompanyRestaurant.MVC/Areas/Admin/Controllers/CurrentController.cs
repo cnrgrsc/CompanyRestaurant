@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using CompanyRestaurant.BLL.Abstracts;
 using CompanyRestaurant.Entities.Entities;
-using CompanyRestaurant.MVC.Areas.Admin.Models.ViewModels.CurrentVM;
+using CompanyRestaurant.MVC.Models.CurrentVM;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
@@ -20,8 +20,20 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var currents = await _currentRepository.GetAll();
-            return View(currents);
+            var currents = await _currentRepository.GetAllActive();
+            var model = _mapper.Map<IEnumerable<CurrentViewModel>>(currents);
+            return View(model);
+        }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var current = await _currentRepository.GetById(id);
+            if (current == null)
+            {
+                return NotFound();
+            }
+            var model = _mapper.Map<CurrentViewModel>(current);
+            return View(model);
         }
 
         public IActionResult Create()
@@ -30,49 +42,47 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateCurrentVM model)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(CurrentViewModel model)
         {
             if (ModelState.IsValid)
             {
                 var current = _mapper.Map<Current>(model);
-                var result = await _currentRepository.Create(current);
-                TempData["Result"] = result;
-                return RedirectToAction("Index");
+                await _currentRepository.Create(current);
+                return RedirectToAction(nameof(Index));
             }
             return View(model);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Update(int id)
+        public async Task<IActionResult> Edit(int id)
         {
             var current = await _currentRepository.GetById(id);
             if (current == null)
             {
                 return NotFound();
             }
-            UpdateCurrentVM updateCurrentVM = _mapper.Map<UpdateCurrentVM>(current);
-            return View(updateCurrentVM);
+            var model = _mapper.Map<CurrentViewModel>(current);
+            return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(UpdateCurrentVM model)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, CurrentViewModel model)
         {
+            if (id != model.Id)
+            {
+                return NotFound();
+            }
+
             if (ModelState.IsValid)
             {
                 var current = _mapper.Map<Current>(model);
-
-                var result = await _currentRepository.Update(current);
-                if (result.Contains("Güncellendi"))
-                {
-                    TempData["Result"] = result;
-                    return RedirectToAction("Index");
-                }
-                ModelState.AddModelError(string.Empty, "Bir hata oluştu: " + result);
+                await _currentRepository.Update(current);
+                return RedirectToAction(nameof(Index));
             }
             return View(model);
         }
 
-        [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
             var current = await _currentRepository.GetById(id);
@@ -80,18 +90,21 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            DeleteCurrentVM deleteCurrentVM = _mapper.Map<DeleteCurrentVM>(current);
-            return View(deleteCurrentVM);
+            var model = _mapper.Map<CurrentViewModel>(current);
+            return View(model);
         }
 
-
         [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var current = await _currentRepository.GetById(id);
-            await _currentRepository.Destroy(current);
-            TempData["Message"] = "Cari başarıyla silindi.";
-            return RedirectToAction("Index");
+            if (current == null)
+            {
+                return NotFound();
+            }
+            await _currentRepository.Delete(current);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

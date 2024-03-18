@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using CompanyRestaurant.BLL.Abstracts;
 using CompanyRestaurant.Entities.Entities;
-using CompanyRestaurant.MVC.Areas.Admin.Models.ViewModels.CustomerVM;
+using CompanyRestaurant.MVC.Models.CustomerVM;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
@@ -17,10 +17,12 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
             _customerRepository = customerRepository;
             _mapper = mapper;
         }
+
         public async Task<IActionResult> Index()
         {
             var customers = await _customerRepository.GetAll();
-            return View(customers);
+            var model = _mapper.Map<IEnumerable<CustomerViewModel>>(customers);
+            return View(model);
         }
 
         public IActionResult Create()
@@ -29,49 +31,47 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateCustomerVM model)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(CustomerViewModel model)
         {
             if (ModelState.IsValid)
             {
                 var customer = _mapper.Map<Customer>(model);
-                var result = await _customerRepository.Create(customer);
-                TempData["Result"] = result;
-                return RedirectToAction("Index");
+                await _customerRepository.Create(customer);
+                return RedirectToAction(nameof(Index));
             }
             return View(model);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Update(int id)
+        public async Task<IActionResult> Edit(int id)
         {
             var customer = await _customerRepository.GetById(id);
             if (customer == null)
             {
                 return NotFound();
             }
-            UpdateCustomerVM updateCustomerVM = _mapper.Map<UpdateCustomerVM>(customer);
-            return View(updateCustomerVM);
+            var model = _mapper.Map<CustomerViewModel>(customer);
+            return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(UpdateCustomerVM model)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, CustomerViewModel model)
         {
+            if (id != model.Id)
+            {
+                return NotFound();
+            }
+
             if (ModelState.IsValid)
             {
                 var customer = _mapper.Map<Customer>(model);
-
-                var result = await _customerRepository.Update(customer);
-                if (result.Contains("Güncellendi"))
-                {
-                    TempData["Result"] = result;
-                    return RedirectToAction("Index");
-                }
-                ModelState.AddModelError(string.Empty, "Bir hata oluştu: " + result);
+                await _customerRepository.Update(customer);
+                return RedirectToAction(nameof(Index));
             }
             return View(model);
         }
 
-        [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
             var customer = await _customerRepository.GetById(id);
@@ -79,19 +79,33 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            DeleteCustomerVM deleteCustomerVM=_mapper.Map<DeleteCustomerVM>(customer);
-
-            return View(deleteCustomerVM);
+            var model = _mapper.Map<CustomerViewModel>(customer);
+            return View(model);
         }
 
-
         [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var customer = await _customerRepository.GetById(id);
-                await _customerRepository.Destroy(customer);
-                TempData["Message"] = "Müşteri başarıyla silindi.";
+            if (customer == null)
+            {
+                return NotFound();
+            }
+            await _customerRepository.Delete(customer);
             return RedirectToAction(nameof(Index));
+        }
+
+        // Detaylar için bir metod. İhtiyaca bağlı olarak düzenlenebilir.
+        public async Task<IActionResult> Details(int id)
+        {
+            var customer = await _customerRepository.GetById(id);
+            if (customer == null)
+            {
+                return NotFound();
+            }
+            var model = _mapper.Map<CustomerViewModel>(customer);
+            return View(model);
         }
     }
 }

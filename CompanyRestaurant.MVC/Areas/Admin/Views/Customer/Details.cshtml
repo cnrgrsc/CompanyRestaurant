@@ -1,0 +1,31 @@
+﻿@model CompanyRestaurant.Models.CustomerViewModel
+
+@{
+    ViewData["Title"] = "Müşteri Detayları";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <h4>Müşteri Bilgileri</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Adı</dt>
+        <dd>@Model.Name</dd>
+
+        <dt>Soyadı</dt>
+        <dd>@Model.Surname</dd>
+
+        <dt>Telefon Numarası</dt>
+        <dd>@Model.Phone</dd>
+
+        <dt>E-Posta</dt>
+        <dd>@Model.Email</dd>
+
+        <dt>Açıklama</dt>
+        <dd>@Model.Description</dd>
+    </dl>
+    <a href="@Url.Action("Edit", "Customer", new { id = Model.Id })" class="btn btn-warning">Düzenle</a>
+    <a href="@Url.Action("Delete", "Customer", new { id = Model.Id })" class="btn btn-danger">Sil</a>
+    <a href="@Url.Action("Index")" class="btn btn-secondary">Geri Dön</a>
+</div>

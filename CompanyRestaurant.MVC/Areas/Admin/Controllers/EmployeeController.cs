@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
 using CompanyRestaurant.BLL.Abstracts;
-using CompanyRestaurant.BLL.Services;
 using CompanyRestaurant.Entities.Entities;
-using CompanyRestaurant.MVC.Areas.Admin.Models.ViewModels.EmployeeVM;
+using CompanyRestaurant.MVC.Models.EmployeeVM;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
@@ -18,12 +17,13 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
             _employeeRepository = employeeRepository;
             _mapper = mapper;
         }
+
         public async Task<IActionResult> Index()
         {
-            var employee = await _employeeRepository.GetAll();
-            return View(employee);
+            var employees = await _employeeRepository.GetAll();
+            var model = _mapper.Map<IEnumerable<EmployeeViewModel>>(employees);
+            return View(model);
         }
-
 
         public IActionResult Create()
         {
@@ -31,50 +31,47 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateEmployeeVM model)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(EmployeeViewModel model)
         {
             if (ModelState.IsValid)
             {
                 var employee = _mapper.Map<Employee>(model);
-                var result = await _employeeRepository.Create(employee);
-                TempData["Result"] = result;
-                return RedirectToAction("Index");
-
+                await _employeeRepository.Create(employee);
+                return RedirectToAction(nameof(Index));
             }
             return View(model);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Update(int id)
+        public async Task<IActionResult> Edit(int id)
         {
             var employee = await _employeeRepository.GetById(id);
             if (employee == null)
             {
                 return NotFound();
             }
-            UpdateEmployeeVM updateEmployeeVM = _mapper.Map<UpdateEmployeeVM>(employee);
-            return View(updateEmployeeVM);
+            var model = _mapper.Map<EmployeeViewModel>(employee);
+            return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(UpdateEmployeeVM model)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, EmployeeViewModel model)
         {
+            if (id != model.Id)
+            {
+                return NotFound();
+            }
+
             if (ModelState.IsValid)
             {
                 var employee = _mapper.Map<Employee>(model);
-                var result = await _employeeRepository.Update(employee);
-                if (result.Contains("Güncellendi"))
-                {
-                    TempData["Result"] = result;
-                    return RedirectToAction("Index");
-                }
-                ModelState.AddModelError(string.Empty, "Bir hata oluştu: " + result);
+                await _employeeRepository.Update(employee);
+                return RedirectToAction(nameof(Index));
             }
             return View(model);
         }
 
-
-        [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
             var employee = await _employeeRepository.GetById(id);
@@ -82,21 +79,32 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-
-            DeleteEmployeeVM deleteEmployeeVM = _mapper.Map<DeleteEmployeeVM>(employee);
-            return View(deleteEmployeeVM);
+            var model = _mapper.Map<EmployeeViewModel>(employee);
+            return View(model);
         }
 
-
         [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var employee = await _employeeRepository.GetById(id);
-            await _employeeRepository.Destroy(employee);
-            TempData["Message"] = "Ürün başarıyla silindi.";
+            if (employee == null)
+            {
+                return NotFound();
+            }
+            await _employeeRepository.Delete(employee);
             return RedirectToAction(nameof(Index));
         }
 
-
+        public async Task<IActionResult> Details(int id)
+        {
+            var employee = await _employeeRepository.GetById(id);
+            if (employee == null)
+            {
+                return NotFound();
+            }
+            var model = _mapper.Map<EmployeeViewModel>(employee);
+            return View(model);
+        }
     }
 }

@@ -1,29 +1,35 @@
-﻿@    using CompanyRestaurant.MVC.Models.ViewModels.CustomerVM;
-    using CompanyRestaurant.MVC.Areas.Admin.Models.ViewModels.CustomerVM;
-
-@model DeleteCustomerVM
+﻿@model CompanyRestaurant.Models.CustomerViewModel
 
 @{
-    ViewData["Title"] = "Delete Customer";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Müşteri Sil";
 }
 
-<h3>@Model.Name @Model.Surname Sil</h3>
+<h2>@ViewData["Title"]</h2>
 
-<!-- Ürün bilgilerini göster -->
+<h3>Gerçekten bu müşteriyi silmek istiyor musunuz?</h3>
 <div>
-    <p>Adı: @Model.Name</p>
-    <p>Soyadı: @Model.Surname</p>
-    <p>Telefon: @Model.Phone</p>
-    <p>Mail: @Model.Email</p>
-    <p>Açıklama: @Model.Description</p>
-    <p>Aktif: @(Model.IsActive ? "Evet" : "Hayır")</p>
+    <h4>Müşteri Bilgileri</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Adı</dt>
+        <dd>@Model.Name</dd>
 
+        <dt>Soyadı</dt>
+        <dd>@Model.Surname</dd>
+
+        <dt>Telefon Numarası</dt>
+        <dd>@Model.Phone</dd>
+
+        <dt>E-Posta</dt>
+        <dd>@Model.Email</dd>
+
+        <dt>Açıklama</dt>
+        <dd>@Model.Description</dd>
+    </dl>
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger">Sil</button>
+        <a href="@Url.Action("Index")" class="btn btn-secondary">İptal</a>
+    </form>
 </div>
-
-<form asp-action="Delete" method="post">
-    <input type="hidden" name="id" value="@Model.Id" />
-    <p>@Model.Name @Model.Surname Müşterisini silmek istediğinize emin misiniz?</p>
-    <button type="submit" class="btn btn-danger">Evet, Sil</button>
-    <a asp-action="Index" class="btn btn-secondary">İptal</a>
-</form>

@@ -1,67 +1,39 @@
-﻿@model List<Customer>
+﻿@model IEnumerable<CompanyRestaurant.Models.CustomerViewModel>
+
 @{
     ViewData["Title"] = "Müşteri Listesi";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<div class="card">
-    <div class="card-header">
-        <div class="d-flex justify-content-between">
-            <h2>@ViewData["Title"]</h2>
-            <a asp-controller="Customer" asp-action="Create" class="btn btn-success">Müşteri Ekle</a>
-        </div>
-    </div>
-    <div class="card-body">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Adı</th>
-                    <th>Soyadı</th>
-                    <th>Telefon</th>
-                    <th>Mail</th>
-                    <th>Açıklama</th>
-                    <th>Durum</th>
+<h2>@ViewData["Title"]</h2>
 
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@item.ID</td>
-                        <td>@item.Name</td>
-                        <td>@item.Surname</td>
-                        <td>@item.Phone</td>
-                        <td>@item.Email</td>
-                        <td>@item.Description</td>
-                        <td>
-                            @if (item.IsActive)
-                            {
-                                <span class="right badge badge-success">Active</span>
-                            }
-                            else
-                            {
-                                <span class="right badge badge-danger">Passive</span>
-                            }
+<table class="table">
+    <thead>
+        <tr>
+            <th>Adı</th>
+            <th>Soyadı</th>
+            <th>Telefon Numarası</th>
+            <th>E-Posta</th>
+            <th>Açıklama</th>
+            <th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Surname</td>
+                <td>@item.Phone</td>
+                <td>@item.Email</td>
+                <td>@item.Description</td>
+                <td>
+                    <a href="@Url.Action("Edit", "Customer", new { id = item.Id })" class="btn btn-warning">Düzenle</a>
+                    <a href="@Url.Action("Details", "Customer", new { id = item.Id })" class="btn btn-info">Detaylar</a>
+                    <a href="@Url.Action("Delete", "Customer", new { id = item.Id })" class="btn btn-danger">Sil</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
 
-                        </td>
-                        <td>
-                            <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-primary">Sil</a>
-
-                            @*  <form asp-area="Admin" asp-controller="Category" asp-action="Delete" asp-route-id="@item.ID" method="post" class="d-inline">
-                        <button type="submit" class="btn btn-danger">Sil</button>
-                        </form> *@
-
-
-                            <a asp-action="Update" asp-route-id="@item.ID" class="btn btn-warning">Güncelle</a>
-                        </td>
-
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-
-</div>
-
+<a href="@Url.Action("Create", "Customer")" class="btn btn-primary">Yeni Müşteri Ekle</a>
