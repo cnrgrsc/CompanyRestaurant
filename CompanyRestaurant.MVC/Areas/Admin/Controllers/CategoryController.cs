@@ -46,30 +46,61 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var category = await _categoryRepository.GetById(id);
-            if (category == null) return NotFound();
+            if (category == null)
+            {
+                return NotFound();
+            }
             var model = _mapper.Map<CategoryViewModel>(category);
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(CategoryViewModel model)
+        public async Task<IActionResult> Edit(int id, CategoryViewModel model)
         {
-            if (ModelState.IsValid)
+            if (id != model.Id || !ModelState.IsValid)
             {
-                var category = _mapper.Map<Category>(model);
-                await _categoryRepository.Update(category);
-                return RedirectToAction(nameof(Index));
+                return View(model);
             }
-            return View(model);
+
+            var category = _mapper.Map<Category>(model);
+            await _categoryRepository.Update(category);
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Delete(int id)
         {
             var category = await _categoryRepository.GetById(id);
-            if (category == null) return NotFound();
-            await _categoryRepository.Delete(category);
+            if (category == null)
+            {
+                return NotFound();
+            }
+            var model = _mapper.Map<CategoryViewModel>(category);
+            return View(model);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var category = await _categoryRepository.GetById(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+            await _categoryRepository.Destroy(category);
             return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var category = await _categoryRepository.GetById(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+            var model = _mapper.Map<CategoryViewModel>(category);
+            return View(model);
         }
     }
 }

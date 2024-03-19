@@ -1,15 +1,13 @@
 ﻿@model CompanyRestaurant.MVC.Models.CategoryVM.CategoryViewModel;
 
 @{
-    ViewData["Title"] = "Kategoriyi Düzenle";
+    ViewData["Title"] = "Yeni Kategori Ekle";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <h2>@ViewData["Title"]</h2>
 
-<form asp-action="Edit" method="post">
-    <input type="hidden" asp-for="Id" />
-
+<form asp-action="Create" method="post">
     <div class="form-group">
         <label asp-for="CategoryName" class="control-label">Kategori Adı</label>
         <input asp-for="CategoryName" class="form-control" />
@@ -22,6 +20,6 @@
         <span asp-validation-for="Description" class="text-danger"></span>
     </div>
 
-    <button type="submit" class="btn btn-success">Güncelle</button>
+    <button type="submit" class="btn btn-primary">Kaydet</button>
     <a href="@Url.Action("Index")" class="btn btn-secondary">İptal</a>
 </form>
