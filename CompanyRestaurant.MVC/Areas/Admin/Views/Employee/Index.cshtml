@@ -1,5 +1,4 @@
-﻿@model IEnumerable<CompanyRestaurant.Models.EmployeeViewModel>
-
+﻿@model IEnumerable<CompanyRestaurant.MVC.Models.EmployeeVM.EmployeeViewModel>
 @{
     ViewData["Title"] = "Çalışan Listesi";
 }
@@ -17,7 +16,6 @@
             <th>Soyadı</th>
             <th>Unvan</th>
             <th>Telefon Numarası</th>
-            <th>E-Posta</th>
             <th>İşlemler</th>
         </tr>
     </thead>
@@ -29,7 +27,6 @@
                 <td>@employee.Surname</td>
                 <td>@employee.Title</td>
                 <td>@employee.Phone</td>
-                <td>@employee.Email</td>
                 <td>
                     <a href="@Url.Action("Details", "Employee", new { id = employee.Id })" class="btn btn-info">Detay</a>
                     <a href="@Url.Action("Edit", "Employee", new { id = employee.Id })" class="btn btn-warning">Düzenle</a>
