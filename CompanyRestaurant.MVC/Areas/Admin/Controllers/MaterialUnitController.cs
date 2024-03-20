@@ -18,7 +18,7 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var materialUnits = await _materialUnitRepository.GetAll();
+            var materialUnits = await _materialUnitRepository.GetAllAsync();
             return View(materialUnits);
         }
 

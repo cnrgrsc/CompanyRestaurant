@@ -20,8 +20,8 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var products = await _productRepository.GetAll();
-            var categories = await _categoryRepository.GetAll();
+            var products = await _productRepository.GetAllAsync();
+            var categories = await _categoryRepository.GetAllAsync();
             //var categories = new SelectList(await _categoryRepository.GetAll(), "ID", "CategoryName");
             ViewBag.Categories = categories;
             return View(products);
@@ -30,7 +30,7 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
 
         public async Task<IActionResult> Create()
         {
-            var categories = await _categoryRepository.GetAll();
+            var categories = await _categoryRepository.GetAllAsync();
             ViewBag.CategoriesSelect = new SelectList(categories, "ID", "CategoryName");
             return View();
 

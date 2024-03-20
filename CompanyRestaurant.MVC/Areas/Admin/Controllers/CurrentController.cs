@@ -18,13 +18,15 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
             _mapper = mapper;
         }
 
+        // Cari Hesapları Listele
         public async Task<IActionResult> Index()
         {
-            var currents = await _currentRepository.GetAllActiveAsync();
+            var currents = await _currentRepository.GetAllAsync();
             var model = _mapper.Map<IEnumerable<CurrentViewModel>>(currents);
             return View(model);
         }
 
+        // Cari Hesap Detayları
         public async Task<IActionResult> Details(int id)
         {
             var current = await _currentRepository.GetByIdAsync(id);
@@ -36,6 +38,7 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
             return View(model);
         }
 
+        // Cari Hesap Ekleme
         public IActionResult Create()
         {
             return View();
@@ -54,6 +57,7 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
             return View(model);
         }
 
+        // Cari Hesap Düzenleme
         public async Task<IActionResult> Edit(int id)
         {
             var current = await _currentRepository.GetByIdAsync(id);
@@ -69,20 +73,17 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, CurrentViewModel model)
         {
-            if (id != model.Id)
+            if (id != model.Id || !ModelState.IsValid)
             {
-                return NotFound();
+                return View(model);
             }
 
-            if (ModelState.IsValid)
-            {
-                var current = _mapper.Map<Current>(model);
-                await _currentRepository.UpdateAsync(current);
-                return RedirectToAction(nameof(Index));
-            }
-            return View(model);
+            var current = _mapper.Map<Current>(model);
+            await _currentRepository.UpdateAsync(current);
+            return RedirectToAction(nameof(Index));
         }
 
+        // Cari Hesap Silme
         public async Task<IActionResult> Delete(int id)
         {
             var current = await _currentRepository.GetByIdAsync(id);
@@ -103,7 +104,7 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            await _currentRepository.DeleteAsync(current);
+            await _currentRepository.DestroyAsync(current);
             return RedirectToAction(nameof(Index));
         }
     }

@@ -18,6 +18,7 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
             _mapper = mapper;
         }
 
+        // Müşterileri Listele
         public async Task<IActionResult> Index()
         {
             var customers = await _customerRepository.GetAllAsync();
@@ -25,6 +26,19 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
             return View(model);
         }
 
+        // Müşteri Detayları
+        public async Task<IActionResult> Details(int id)
+        {
+            var customer = await _customerRepository.GetByIdAsync(id);
+            if (customer == null)
+            {
+                return NotFound();
+            }
+            var model = _mapper.Map<CustomerViewModel>(customer);
+            return View(model);
+        }
+
+        // Müşteri Ekleme
         public IActionResult Create()
         {
             return View();
@@ -43,6 +57,7 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
             return View(model);
         }
 
+        // Müşteri Düzenleme
         public async Task<IActionResult> Edit(int id)
         {
             var customer = await _customerRepository.GetByIdAsync(id);
@@ -58,20 +73,17 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, CustomerViewModel model)
         {
-            if (id != model.Id)
+            if (id != model.Id || !ModelState.IsValid)
             {
-                return NotFound();
+                return View(model);
             }
 
-            if (ModelState.IsValid)
-            {
-                var customer = _mapper.Map<Customer>(model);
-                await _customerRepository.UpdateAsync(customer);
-                return RedirectToAction(nameof(Index));
-            }
-            return View(model);
+            var customer = _mapper.Map<Customer>(model);
+            await _customerRepository.UpdateAsync(customer);
+            return RedirectToAction(nameof(Index));
         }
 
+        // Müşteri Silme
         public async Task<IActionResult> Delete(int id)
         {
             var customer = await _customerRepository.GetByIdAsync(id);
@@ -92,20 +104,8 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            await _customerRepository.DeleteAsync(customer);
+            await _customerRepository.DestroyAsync(customer);
             return RedirectToAction(nameof(Index));
-        }
-
-        // Detaylar için bir metod. İhtiyaca bağlı olarak düzenlenebilir.
-        public async Task<IActionResult> Details(int id)
-        {
-            var customer = await _customerRepository.GetByIdAsync(id);
-            if (customer == null)
-            {
-                return NotFound();
-            }
-            var model = _mapper.Map<CustomerViewModel>(customer);
-            return View(model);
         }
     }
 }

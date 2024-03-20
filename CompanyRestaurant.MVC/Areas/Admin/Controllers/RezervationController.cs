@@ -23,8 +23,8 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var rezervations = await _rezervationRepository.GetAll();
-            var tables = await _tableRepository.GetAll();
+            var rezervations = await _rezervationRepository.GetAllAsync();
+            var tables = await _tableRepository.GetAllAsync();
             //var appUsers = await _appUserRepository.GetAll();
             ViewBag.Tables = tables;
             //ViewBag.AppUsers = appUsers;
@@ -35,7 +35,7 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
         public async Task<IActionResult> Create()
         {
 
-            var tables = await _tableRepository.GetAll();
+            var tables = await _tableRepository.GetAllAsync();
             ViewBag.TablesSelect = new SelectList(tables, "ID", "TableNo");
             //var appUsers=await _appUserRepository.GetAll();
             //ViewBag.AppUsersSelect = new SelectList(appUsers, "ID", "UserName");

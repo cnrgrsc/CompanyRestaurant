@@ -5,40 +5,49 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>@ViewData["Title"]</h2>
+<div class="container mt-4">
+    <h2 class="mb-4">@ViewData["Title"]</h2>
 
-<div class="details-view">
-    <dl class="dl-horizontal">
-        <dt>Hesap Numarası</dt>
-        <dd>@Model.AccountNumber</dd>
+    <div class="card">
+        <div class="card-header">
+            Cari Hesap Detayları
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                
+                <dt class="col-sm-3">Hesap Numarası</dt>
+                <dd class="col-sm-9">@Model.AccountNumber</dd>
 
-        <dt>Şirket Adı</dt>
-        <dd>@Model.CompanyName</dd>
+                <dt class="col-sm-3">Şirket Adı</dt>
+                <dd class="col-sm-9">@Model.CompanyName</dd>
 
-        <dt>İletişim Adı</dt>
-        <dd>@Model.ContactName</dd>
+                <dt class="col-sm-3">İletişim Adı</dt>
+                <dd class="col-sm-9">@Model.ContactName</dd>
 
-        <dt>İletişim E-Postası</dt>
-        <dd>@Model.ContactEmail</dd>
+                <dt class="col-sm-3">İletişim E-Postası</dt>
+                <dd class="col-sm-9">@Model.ContactEmail</dd>
 
-        <dt>İletişim Telefonu</dt>
-        <dd>@Model.ContactPhone</dd>
+                <dt class="col-sm-3">İletişim Telefonu</dt>
+                <dd class="col-sm-9">@Model.ContactPhone</dd>
 
-        <dt>Adres</dt>
-        <dd>@Model.Address</dd>
+                <dt class="col-sm-3">Adres</dt>
+                <dd class="col-sm-9">@Model.Address</dd>
 
-        <dt>Vergi Numarası</dt>
-        <dd>@Model.TaxNumber</dd>
+                <dt class="col-sm-3">Vergi Numarası</dt>
+                <dd class="col-sm-9">@Model.TaxNumber</dd>
 
-        <dt>Vergi Dairesi</dt>
-        <dd>@Model.TaxOffice</dd>
+                <dt class="col-sm-3">Vergi Dairesi</dt>
+                <dd class="col-sm-9">@Model.TaxOffice</dd>
 
-        <dt>Bakiye</dt>
-        <dd>@Model.Balance.ToString("C")</dd>
+                <dt class="col-sm-3">Bakiye</dt>
+                <dd class="col-sm-9">@Model.Balance.ToString("C")</dd>
 
-        <dt>Sipariş Sayısı</dt>
-        <dd>@Model.OrderCount</dd>
-    </dl>
+                <dt class="col-sm-3">Sipariş Sayısı</dt>
+                <dd class="col-sm-9">@Model.OrderCount</dd>
+                
+            </dl>
+        </div>
+    </div>
+
+    <a href="@Url.Action("Index")" class="btn btn-primary mt-3">Geri</a>
 </div>
-
-<a href="@Url.Action("Index")" class="btn btn-default">Geri</a>

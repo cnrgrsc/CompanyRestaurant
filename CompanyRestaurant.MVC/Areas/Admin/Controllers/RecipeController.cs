@@ -17,7 +17,7 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var recipes = await _recipeRepository.GetAll();
+            var recipes = await _recipeRepository.GetAllAsync();
             return View(recipes);
         }
 

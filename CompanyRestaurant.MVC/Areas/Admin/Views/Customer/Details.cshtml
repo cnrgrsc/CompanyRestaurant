@@ -7,9 +7,7 @@
 
 <h2>@ViewData["Title"]</h2>
 
-<div>
-    <h4>Müşteri Bilgileri</h4>
-    <hr />
+<div class="details-view">
     <dl class="dl-horizontal">
         <dt>Adı</dt>
         <dd>@Model.Name</dd>
@@ -25,8 +23,22 @@
 
         <dt>Açıklama</dt>
         <dd>@Model.Description</dd>
+
+        <dt>Cari Hesap</dt>
+        <dd>@Model.CurrentAccountName</dd>
+
+        <dt>Rezervasyon Sayısı</dt>
+        <dd>@Model.ReservationCount</dd>
+
+        <dt>Durum</dt>
+        <dd>@Model.Status.ToString()</dd>
+
+        <dt>Aktif Mi?</dt>
+        <dd>@Model.IsActive</dd>
     </dl>
-    <a href="@Url.Action("Edit", "Customer", new { id = Model.Id })" class="btn btn-warning">Düzenle</a>
-    <a href="@Url.Action("Delete", "Customer", new { id = Model.Id })" class="btn btn-danger">Sil</a>
-    <a href="@Url.Action("Index")" class="btn btn-secondary">Geri Dön</a>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Düzenle</a>
+    <a asp-action="Index" class="btn btn-secondary">Geri</a>
 </div>

@@ -39,5 +39,4 @@ namespace CompanyRestaurant.MVC.Models.CustomerVM
         [Display(Name = "Aktif Mi?")]
         public bool IsActive { get; set; } // Kategori aktif mi?
     }
-
 }
