@@ -20,7 +20,7 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var employees = await _employeeRepository.GetAll();
+            var employees = await _employeeRepository.GetAllAsync();
             var model = _mapper.Map<IEnumerable<EmployeeViewModel>>(employees);
             return View(model);
         }
@@ -37,7 +37,7 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var employee = _mapper.Map<Employee>(model);
-                await _employeeRepository.Create(employee);
+                await _employeeRepository.CreateAsync(employee);
                 return RedirectToAction(nameof(Index));
             }
             return View(model);
@@ -45,7 +45,7 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
 
         public async Task<IActionResult> Edit(int id)
         {
-            var employee = await _employeeRepository.GetById(id);
+            var employee = await _employeeRepository.GetByIdAsync(id);
             if (employee == null)
             {
                 return NotFound();
@@ -66,7 +66,7 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var employee = _mapper.Map<Employee>(model);
-                await _employeeRepository.Update(employee);
+                await _employeeRepository.UpdateAsync(employee);
                 return RedirectToAction(nameof(Index));
             }
             return View(model);
@@ -74,7 +74,7 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            var employee = await _employeeRepository.GetById(id);
+            var employee = await _employeeRepository.GetByIdAsync(id);
             if (employee == null)
             {
                 return NotFound();
@@ -87,18 +87,18 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var employee = await _employeeRepository.GetById(id);
+            var employee = await _employeeRepository.GetByIdAsync(id);
             if (employee == null)
             {
                 return NotFound();
             }
-            await _employeeRepository.Delete(employee);
+            await _employeeRepository.DeleteAsync(employee);
             return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Details(int id)
         {
-            var employee = await _employeeRepository.GetById(id);
+            var employee = await _employeeRepository.GetByIdAsync(id);
             if (employee == null)
             {
                 return NotFound();

@@ -4,30 +4,17 @@ namespace CompanyRestaurant.BLL.Abstracts
 {
 	public interface IRepository<T> where T :class,IEntity
     {
-        //List
-        Task<IEnumerable<T>> GetAll();  //List içinde list döndürür.foreach döndürmemek için enumerable kullanırız.
+        // CRUD işlemleri
+        Task<IEnumerable<T>> GetAllAsync();
+        Task<IEnumerable<T>> GetAllActiveAsync();
+        Task<IEnumerable<T>> GetAllPassiveAsync();
+        Task<T> GetByIdAsync(int id);
+        Task CreateAsync(T entity);
+        Task UpdateAsync(T entity);
+        Task DeleteAsync(T entity); // Durum güncellemesiyle silme işlemi
+        Task DestroyAsync(T entity); // Veritabanından kalıcı olarak silme
 
-		//Aktifler veriler
-		Task<IEnumerable<T>> GetAllActive();
-		Task<IEnumerable<T>> GetAllPassive();
-
-
-		//Veriler Silinsin(Destroy)
-		Task<string> Destroy(T entity);
-
-        //Birden fazla veri silme
-        Task<string> DestroyAllData(List<T> entity);
-
-        //Delete=veri silme durumunu delete olarak güncelle
-        Task<string> Delete(T entity);
-
-        //Read
-        Task<T> GetById(int id); 
-
-        //Create
-        Task<string> Create(T entity);
-
-        //Update
-        Task<string> Update(T entity);
+        // Toplu işlemler
+        Task DestroyAllAsync(IEnumerable<T> entities);
     }
 }

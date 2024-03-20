@@ -34,7 +34,10 @@ namespace CompanyRestaurant.MVC.Models.OrderVM
         // Siparişin oluşturulma tarihi gibi sistem tarafından otomatik atanacak alanlar da eklenebilir
         [Display(Name = "Oluşturulma Tarihi")]
         public DateTime CreatedDate { get; set; }
-
+        [Display(Name = "Durum")]
+        public DataStatus Status { get; set; } // Kategori durumu
+        [Display(Name = "Aktif Mi?")]
+        public bool IsActive { get; set; } // Kategori aktif mi?
         // Siparişle ilişkili ürünlerin listesi
         [Display(Name = "Sipariş Ürünleri")]
         public List<ProductOrderViewModel> ProductOrders { get; set; }

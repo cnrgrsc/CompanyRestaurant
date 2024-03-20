@@ -17,6 +17,7 @@
             <th>Kategori Adı</th>
             <th>Açıklama</th>
             <th>Ürün Sayısı</th>
+            <th>Durum</th>
             <th>İşlemler</th>
         </tr>
     </thead>
@@ -27,6 +28,16 @@
                 <td>@category.CategoryName</td>
                 <td>@category.Description</td>
                 <td>@category.ProductCount</td>
+                <td>
+                    @if(category.IsActive)
+                    {
+                        <span class="badge badge-success">Aktif</span>
+                    }
+                    else
+                    {
+                        <span class="badge badge-danger">Pasif</span>
+                    }
+                </td>
                 <td>
                     <a href="@Url.Action("Edit", "Category", new { id = category.Id })" class="btn btn-warning">Düzenle</a>
                     <a href="@Url.Action("Details", "Category", new { id = category.Id })" class="btn btn-info">Detaylar</a>

@@ -17,7 +17,7 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var materialPrice = await _materialPriceRepository.GetAll();
+            var materialPrice = await _materialPriceRepository.GetAllAsync();
             return View(materialPrice);
         }
 

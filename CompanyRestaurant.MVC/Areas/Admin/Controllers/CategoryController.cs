@@ -9,10 +9,10 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
     [Area("Admin")]
     public class CategoryController : Controller
     {
-        private readonly ICategoryRepository _categoryRepository;
+        private readonly IRepository<Category> _categoryRepository;
         private readonly IMapper _mapper;
 
-        public CategoryController(ICategoryRepository categoryRepository, IMapper mapper)
+        public CategoryController(IRepository<Category> categoryRepository, IMapper mapper)
         {
             _categoryRepository = categoryRepository;
             _mapper = mapper;
@@ -20,7 +20,7 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var categories = await _categoryRepository.GetAll();
+            var categories = await _categoryRepository.GetAllAsync();
             var model = _mapper.Map<IEnumerable<CategoryViewModel>>(categories);
             return View(model);
         }
@@ -37,7 +37,7 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var category = _mapper.Map<Category>(model);
-                await _categoryRepository.Create(category);
+                await _categoryRepository.CreateAsync(category);
                 return RedirectToAction(nameof(Index));
             }
             return View(model);
@@ -45,7 +45,7 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
 
         public async Task<IActionResult> Edit(int id)
         {
-            var category = await _categoryRepository.GetById(id);
+            var category = await _categoryRepository.GetByIdAsync(id);
             if (category == null)
             {
                 return NotFound();
@@ -64,13 +64,13 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
             }
 
             var category = _mapper.Map<Category>(model);
-            await _categoryRepository.Update(category);
+            await _categoryRepository.UpdateAsync(category);
             return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Delete(int id)
         {
-            var category = await _categoryRepository.GetById(id);
+            var category = await _categoryRepository.GetByIdAsync(id);
             if (category == null)
             {
                 return NotFound();
@@ -83,18 +83,19 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var category = await _categoryRepository.GetById(id);
+            var category = await _categoryRepository.GetByIdAsync(id);
             if (category == null)
             {
                 return NotFound();
             }
-            await _categoryRepository.Destroy(category);
+
+            await _categoryRepository.DestroyAsync(category);
             return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Details(int id)
         {
-            var category = await _categoryRepository.GetById(id);
+            var category = await _categoryRepository.GetByIdAsync(id);
             if (category == null)
             {
                 return NotFound();

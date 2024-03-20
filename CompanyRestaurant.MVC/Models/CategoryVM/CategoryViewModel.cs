@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CompanyRestaurant.Entities.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace CompanyRestaurant.MVC.Models.CategoryVM
 {
@@ -16,5 +17,9 @@ namespace CompanyRestaurant.MVC.Models.CategoryVM
         // Opsiyonel: Eğer kategoriye ait ürün sayısını göstermek isterseniz
         [Display(Name = "Ürün Sayısı")]
         public int ProductCount { get; set; } // Bu kategoriye ait ürün sayısı
+        [Display(Name ="Durum")]
+        public DataStatus Status { get; set; } // Kategori durumu
+        [Display(Name ="Aktif Mi?")]
+        public bool IsActive { get; set; } // Kategori aktif mi?
     }
 }

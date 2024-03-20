@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CompanyRestaurant.Entities.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace CompanyRestaurant.MVC.Models.CurrentVM
 {
@@ -42,5 +43,9 @@ namespace CompanyRestaurant.MVC.Models.CurrentVM
         // Bu bilgi, kullanıcı arayüzünde ilgili cari hesap detaylarında ek bilgi olarak sunulabilir
         [Display(Name = "Sipariş Sayısı")]
         public int OrderCount { get; set; } // Bu cari hesaba ait sipariş sayısı
+        [Display(Name = "Durum")]
+        public DataStatus Status { get; set; } // Kategori durumu
+        [Display(Name = "Aktif Mi?")]
+        public bool IsActive { get; set; } // Kategori aktif mi?
     }
 }

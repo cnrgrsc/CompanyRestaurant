@@ -16,127 +16,72 @@ namespace CompanyRestaurant.BLL.Concretes
             _entities = _context.Set<T>(); //gelen generic değeri dönüştürme işlemini _entities gerçekleştirrecek.kodu kısalttım.
         }
 
-        public async Task<string> Create(T entity)
+        public async Task CreateAsync(T entity)
         {
-            try
-            {
-                await _entities.AddAsync(entity);
-                await _context.SaveChangesAsync();
-                return "Kayıt işlemi gerçekleşti";
-            }
-            catch (Exception ex)
-            {
-                return ex.Message;
-            }
+            if (entity == null) throw new ArgumentNullException(nameof(entity));
+
+            await _entities.AddAsync(entity);
+            await _context.SaveChangesAsync();
         }
 
-        public async Task<string> Delete(T entity)
+        //public async Task<string> DeleteAsync(T entity)
+        //{
+        //    if (entity == null) throw new ArgumentNullException(nameof(entity));
+
+        //    entity.Status = Entities.Enums.DataStatus.Deleted;
+        //    return await UpdateAsync(entity); // Return the result of the Update operation
+        //}
+
+        public async Task DestroyAsync(T entity)
         {
-            try
-            {
+            if (entity == null) throw new ArgumentNullException(nameof(entity));
 
-                entity.Status = Entities.Enums.DataStatus.Deleted;
-                await Update(entity); // Bu satır asenkron bir çağrı içerdiği için await ile beklenmeli
-                return "Silme İşlemi başarılı!";
-
-
-            }
-            catch (Exception ex)
-            {
-
-                return ex.Message;
-            }
+            _entities.Remove(entity);
+            await _context.SaveChangesAsync();
         }
 
-        public async Task<string> Destroy(T entity)
+        public async Task DestroyAllAsync(IEnumerable<T> entities)
         {
-            try
-            {
-                _entities.Remove(entity);
-                await _context.SaveChangesAsync();
-                return "Kalıcı olarak silindi!";
+            if (entities == null) throw new ArgumentNullException(nameof(entities));
 
-            }
-            catch (Exception ex)
-            {
-                return ex.Message;
-            }
+            _entities.RemoveRange(entities);
+            await _context.SaveChangesAsync();
         }
 
-        public async Task<string> DestroyAllData(List<T> entity)
-        {
-            try
-            {
-                _entities.RemoveRange(entity);
-                await _context.SaveChangesAsync();
-                return "Kalıcı olarak toplu silindi!!";
-            }
-            catch (Exception ex)
-            {
-
-                return ex.Message;
-            }
-        }
-
-        public async Task<IEnumerable<T>> GetAll()
+        public async Task<IEnumerable<T>> GetAllAsync()
         {
             return await _entities.ToListAsync();
         }
 
-
-        public async Task<IEnumerable<T>> GetAllActive()
+        public async Task<IEnumerable<T>> GetAllActiveAsync()
         {
-            return await _entities.Where(x => x.IsActive == true).ToListAsync();
+            return await _entities.Where(x => x.IsActive).ToListAsync();
         }
 
-        public async Task<IEnumerable<T>> GetAllPassive()
+        public async Task<IEnumerable<T>> GetAllPassiveAsync()
         {
-            return await _entities.Where(x => x.IsActive == false).ToListAsync();
+            return await _entities.Where(x => !x.IsActive).ToListAsync();
         }
 
-
-        public async Task<T> GetById(int id)
+        public async Task<T> GetByIdAsync(int id)
         {
-            var byId = await _entities.FirstOrDefaultAsync(x => x.ID == id);
-            //todo:ıd kontrol edilecek!!!!
-            return byId;
+            return await _entities.FirstOrDefaultAsync(x => x.ID == id);
         }
 
-        public async Task<string> Update(T entity)
+        public async Task UpdateAsync(T entity)
         {
-            string result = "";
+            if (entity == null) throw new ArgumentNullException(nameof(entity));
 
-            try
-            {
+            _context.Entry(entity).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
 
-                switch (entity.Status)
-                {
-                    case Entities.Enums.DataStatus.Updated:
-                        entity.Status = Entities.Enums.DataStatus.Updated;
-                        // entity.IsActive = true;
-                        _context.Entry(entity).State = EntityState.Modified;
-                        result = "Veri Güncellendi";
-                        break;
+        public async Task DeleteAsync(T entity)
+        {
+            if (entity == null) throw new ArgumentNullException(nameof(entity));
 
-                    case Entities.Enums.DataStatus.Deleted:
-                        entity.Status = Entities.Enums.DataStatus.Deleted;
-                        entity.IsActive = false;
-                        _context.Entry(entity).State = EntityState.Modified;
-
-                        result = "Veri Silindi!!";
-                        break;
-
-                }
-
-                await _context.SaveChangesAsync();
-                return result;
-            }
-            catch (Exception ex)
-            {
-                //todo:update metodu kontrol edilecek!!!!
-                result = ex.Message;
-                return result;
-            }
+            entity.Status = Entities.Enums.DataStatus.Deleted;
+            await UpdateAsync(entity); // Bu satırda geri dönüş değeri olmadığı için herhangi bir değer döndürmeyin.
         }
     }
 }

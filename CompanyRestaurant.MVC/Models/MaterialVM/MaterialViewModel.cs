@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CompanyRestaurant.Entities.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace CompanyRestaurant.MVC.Models.MaterialVM
 {
@@ -26,6 +27,10 @@ namespace CompanyRestaurant.MVC.Models.MaterialVM
         public string UnitName { get; set; } // Birim tipi adı, gösterim için
 
         // Malzeme ile ilişkili diğer bilgiler veya özellikler de eklenebilir.
+        [Display(Name = "Durum")]
+        public DataStatus Status { get; set; } // Kategori durumu
+        [Display(Name = "Aktif Mi?")]
+        public bool IsActive { get; set; } // Kategori aktif mi?
     }
 
 }

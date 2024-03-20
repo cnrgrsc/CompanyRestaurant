@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CompanyRestaurant.Entities.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace CompanyRestaurant.MVC.Models.CustomerVM
 {
@@ -33,6 +34,10 @@ namespace CompanyRestaurant.MVC.Models.CustomerVM
         // Müşteri ile ilişkilendirilen rezervasyon sayısı gibi ek bilgiler de ViewModel içerisinde yer alabilir.
         [Display(Name = "Rezervasyon Sayısı")]
         public int ReservationCount { get; set; } // Müşteriye ait rezervasyon sayısı
+        [Display(Name = "Durum")]
+        public DataStatus Status { get; set; } // Kategori durumu
+        [Display(Name = "Aktif Mi?")]
+        public bool IsActive { get; set; } // Kategori aktif mi?
     }
 
 }

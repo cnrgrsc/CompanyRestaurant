@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CompanyRestaurant.Entities.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace CompanyRestaurant.MVC.Models.MaterialPriceVM
 {
@@ -24,6 +25,10 @@ namespace CompanyRestaurant.MVC.Models.MaterialPriceVM
         public string SupplierName { get; set; } // İlişkilendirilmiş tedarikçinin adı
 
         // Opsiyonel: Malzeme ile ilişkili diğer bilgiler veya özellikler de eklenebilir.
+        [Display(Name = "Durum")]
+        public DataStatus Status { get; set; } // Kategori durumu
+        [Display(Name = "Aktif Mi?")]
+        public bool IsActive { get; set; } // Kategori aktif mi?
     }
 
 }

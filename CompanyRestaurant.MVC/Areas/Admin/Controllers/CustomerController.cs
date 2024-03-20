@@ -20,7 +20,7 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var customers = await _customerRepository.GetAll();
+            var customers = await _customerRepository.GetAllAsync();
             var model = _mapper.Map<IEnumerable<CustomerViewModel>>(customers);
             return View(model);
         }
@@ -37,7 +37,7 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var customer = _mapper.Map<Customer>(model);
-                await _customerRepository.Create(customer);
+                await _customerRepository.CreateAsync(customer);
                 return RedirectToAction(nameof(Index));
             }
             return View(model);
@@ -45,7 +45,7 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
 
         public async Task<IActionResult> Edit(int id)
         {
-            var customer = await _customerRepository.GetById(id);
+            var customer = await _customerRepository.GetByIdAsync(id);
             if (customer == null)
             {
                 return NotFound();
@@ -66,7 +66,7 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var customer = _mapper.Map<Customer>(model);
-                await _customerRepository.Update(customer);
+                await _customerRepository.UpdateAsync(customer);
                 return RedirectToAction(nameof(Index));
             }
             return View(model);
@@ -74,7 +74,7 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            var customer = await _customerRepository.GetById(id);
+            var customer = await _customerRepository.GetByIdAsync(id);
             if (customer == null)
             {
                 return NotFound();
@@ -87,19 +87,19 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var customer = await _customerRepository.GetById(id);
+            var customer = await _customerRepository.GetByIdAsync(id);
             if (customer == null)
             {
                 return NotFound();
             }
-            await _customerRepository.Delete(customer);
+            await _customerRepository.DeleteAsync(customer);
             return RedirectToAction(nameof(Index));
         }
 
         // Detaylar için bir metod. İhtiyaca bağlı olarak düzenlenebilir.
         public async Task<IActionResult> Details(int id)
         {
-            var customer = await _customerRepository.GetById(id);
+            var customer = await _customerRepository.GetByIdAsync(id);
             if (customer == null)
             {
                 return NotFound();

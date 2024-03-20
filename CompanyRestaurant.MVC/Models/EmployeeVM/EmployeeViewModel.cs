@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CompanyRestaurant.Entities.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace CompanyRestaurant.MVC.Models.EmployeeVM
 {
@@ -36,6 +37,10 @@ namespace CompanyRestaurant.MVC.Models.EmployeeVM
 
         // Çalışanın ait olduğu siparişler, performans değerlendirmeleri gibi ek bilgiler
         // Bu bilgiler, detay görüntülemelerde veya ilişkili listelemelerde kullanılabilir.
+        [Display(Name = "Durum")]
+        public DataStatus Status { get; set; } // Kategori durumu
+        [Display(Name = "Aktif Mi?")]
+        public bool IsActive { get; set; } // Kategori aktif mi?
     }
 
 }

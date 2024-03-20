@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CompanyRestaurant.Entities.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace CompanyRestaurant.MVC.Models.PerformanceReviewVM
 {
@@ -32,5 +33,9 @@ namespace CompanyRestaurant.MVC.Models.PerformanceReviewVM
 
         [Display(Name = "Notlar")]
         public string Notes { get; set; } // Performansla ilgili notlar veya yorumlar
+        [Display(Name = "Durum")]
+        public DataStatus Status { get; set; } // Kategori durumu
+        [Display(Name = "Aktif Mi?")]
+        public bool IsActive { get; set; } // Kategori aktif mi?
     }
 }

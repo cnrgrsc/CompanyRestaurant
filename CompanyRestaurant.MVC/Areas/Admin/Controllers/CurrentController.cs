@@ -20,14 +20,14 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var currents = await _currentRepository.GetAllActive();
+            var currents = await _currentRepository.GetAllActiveAsync();
             var model = _mapper.Map<IEnumerable<CurrentViewModel>>(currents);
             return View(model);
         }
 
         public async Task<IActionResult> Details(int id)
         {
-            var current = await _currentRepository.GetById(id);
+            var current = await _currentRepository.GetByIdAsync(id);
             if (current == null)
             {
                 return NotFound();
@@ -48,7 +48,7 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var current = _mapper.Map<Current>(model);
-                await _currentRepository.Create(current);
+                await _currentRepository.CreateAsync(current);
                 return RedirectToAction(nameof(Index));
             }
             return View(model);
@@ -56,7 +56,7 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
 
         public async Task<IActionResult> Edit(int id)
         {
-            var current = await _currentRepository.GetById(id);
+            var current = await _currentRepository.GetByIdAsync(id);
             if (current == null)
             {
                 return NotFound();
@@ -77,7 +77,7 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var current = _mapper.Map<Current>(model);
-                await _currentRepository.Update(current);
+                await _currentRepository.UpdateAsync(current);
                 return RedirectToAction(nameof(Index));
             }
             return View(model);
@@ -85,7 +85,7 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            var current = await _currentRepository.GetById(id);
+            var current = await _currentRepository.GetByIdAsync(id);
             if (current == null)
             {
                 return NotFound();
@@ -98,12 +98,12 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var current = await _currentRepository.GetById(id);
+            var current = await _currentRepository.GetByIdAsync(id);
             if (current == null)
             {
                 return NotFound();
             }
-            await _currentRepository.Delete(current);
+            await _currentRepository.DeleteAsync(current);
             return RedirectToAction(nameof(Index));
         }
     }
