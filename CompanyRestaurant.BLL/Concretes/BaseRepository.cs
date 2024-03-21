@@ -24,14 +24,6 @@ namespace CompanyRestaurant.BLL.Concretes
             await _context.SaveChangesAsync();
         }
 
-        //public async Task<string> DeleteAsync(T entity)
-        //{
-        //    if (entity == null) throw new ArgumentNullException(nameof(entity));
-
-        //    entity.Status = Entities.Enums.DataStatus.Deleted;
-        //    return await UpdateAsync(entity); // Return the result of the Update operation
-        //}
-
         public async Task DestroyAsync(T entity)
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));

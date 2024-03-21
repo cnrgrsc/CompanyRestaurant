@@ -23,10 +23,6 @@ namespace CompanyRestaurant.BLL.Services
                                                           .ToListAsync();
 
             return employeesWithPerformance;
-
-            // Not: Bu kod, Employee entity'nizin PerformanceReview ile ilişkili olduğunu varsayar.
-            // İlişkiniz farklı bir yapıdaysa (örneğin farklı tablolar veya ilişkiler kullanıyorsanız),
-            // bu sorguyu ilişkinize uygun olarak düzenlemeniz gerekecektir.
         }
     }
 }

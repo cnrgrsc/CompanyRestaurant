@@ -1,5 +1,8 @@
+using CompanyRestaurant.DAL.Context;
+using CompanyRestaurant.Entities.Entities;
 using CompanyRestaurant.IOC.DependecyResolvers;
 using CompanyRestaurant.MVC.AutoMappers;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,33 +14,36 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 builder.Services.AddControllersWithViews();
 
-//builder.Services.AddIdentity<AppUser, IdentityRole<int>>(x =>
-//{
-//    x.Password.RequireDigit = false;
-//    x.Password.RequireUppercase = false;
-//    x.Password.RequireLowercase = false;
-//    x.Password.RequiredLength = 2;
-//    x.SignIn.RequireConfirmedEmail = false;
-//    x.Password.RequireNonAlphanumeric = false;
+// Eðer kullanýcaksanýz, ASP.NET Core Identity yapýlandýrmasý
+builder.Services.AddIdentity<AppUser, IdentityRole<int>>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = false;
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.SignIn.RequireConfirmedEmail = false;
+    options.Password.RequiredLength = 2;
+})
+.AddEntityFrameworkStores<CompanyRestaurantContext>()
+.AddDefaultTokenProviders();
 
 
-//}).AddEntityFrameworkStores<CompanyRestaurantContext>();
-
-
-//DependecyResolvers
-
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Account/Login"; // Giriþ yapýlmamýþsa yönlendirilecek yol
+    options.AccessDeniedPath = "/Account/AccessDenied"; // Eriþim reddedildiðinde yönlendirilecek yol
+    options.LogoutPath = "/Account/Logout"; // Çýkýþ iþlemi için yol (isteðe baðlý)
+});
 //AddDbContext
 builder.Services.AddRestaurantDb();
 
-
 //AddRepositories
 builder.Services.AddRepositoryService();
-
-
+//builder.Services.AddAuthentication();
+//builder.Services.AddAuthorization();
 
 var app = builder.Build();
-
-
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -52,7 +58,18 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
+
+//app.MapControllerRoute(
+//    name: "areas",
+//    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+//);
+
+//app.MapControllerRoute(
+//    name: "default",
+//    pattern: "{controller=Home}/{action=Index}/{id?}"
+//);
 
 app.UseEndpoints(endpoints =>
 {

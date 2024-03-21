@@ -25,10 +25,7 @@ namespace CompanyRestaurant.BLL.Services
 
         public async Task<IEnumerable<Order>> GenerateSalesReport(DateTime startDate, DateTime endDate)
         {
-            // Bu metod, satış raporu oluşturmak için kullanılabilir.
-            // Örneğin, belirli bir tarih aralığındaki tüm siparişleri ve toplam satış miktarını döndürebilir.
-            // Burada basitçe tarih aralığına göre siparişleri filtreleyip döndürüyoruz.
-            // Gerçek bir senaryoda, siparişler üzerinden daha detaylı analizler yapılabilir.
+            
             return await _context.Orders
                                  .Where(order => order.CreatedDate >= startDate && order.CreatedDate <= endDate)
                                  .ToListAsync();
