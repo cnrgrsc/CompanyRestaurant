@@ -1,3 +1,5 @@
+using CompanyRestaurant.Common.MailSender.Abstract;
+using CompanyRestaurant.Common.MailSender.Concrate;
 using CompanyRestaurant.DAL.Context;
 using CompanyRestaurant.Entities.Entities;
 using CompanyRestaurant.IOC.DependecyResolvers;
@@ -10,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 //builder.Services.AddMapperService();
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
+
 
 // Add services to the container.
 

@@ -1,6 +1,8 @@
 ﻿using CompanyRestaurant.BLL.Abstracts;
 using CompanyRestaurant.BLL.Concretes;
 using CompanyRestaurant.BLL.Services;
+using CompanyRestaurant.Common.MailSender.Abstract;
+using CompanyRestaurant.Common.MailSender.Concrate;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CompanyRestaurant.IOC.DependecyResolvers
@@ -30,6 +32,8 @@ namespace CompanyRestaurant.IOC.DependecyResolvers
             services.AddScoped<ISupplierRepository, SupplierRepository>();
             services.AddScoped<ITableRepository, TableRepository>();
             services.AddScoped<IUnitStockRepository, UnitStockRepository>();
+            services.AddSingleton<IEmailSender, EmailSender>();
+            
 
             return services;
         }

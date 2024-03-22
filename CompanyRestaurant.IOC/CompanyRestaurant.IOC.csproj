@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CompanyRestaurant.BLL\CompanyRestaurant.BLL.csproj" />
+    <ProjectReference Include="..\CompanyRestaurant.Common\CompanyRestaurant.Common.csproj" />
     <ProjectReference Include="..\CompanyRestaurant.DAL\CompanyRestaurant.DAL.csproj" />
   </ItemGroup>
 
