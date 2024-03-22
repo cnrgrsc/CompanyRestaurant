@@ -3,6 +3,7 @@ using CompanyRestaurant.Entities.Entities;
 using CompanyRestaurant.IOC.DependecyResolvers;
 using CompanyRestaurant.MVC.AutoMappers;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +13,7 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 // Add services to the container.
 
-builder.Services.AddControllersWithViews();
+//builder.Services.AddControllersWithViews();
 
 // Eðer kullanýcaksanýz, ASP.NET Core Identity yapýlandýrmasý
 builder.Services.AddIdentity<AppUser, IdentityRole<int>>(options =>
@@ -28,13 +29,14 @@ builder.Services.AddIdentity<AppUser, IdentityRole<int>>(options =>
 .AddEntityFrameworkStores<CompanyRestaurantContext>()
 .AddDefaultTokenProviders();
 
-
+//bu ayar biz admin paneli içine accountcontrolleri koyduðumuz için var.
 builder.Services.ConfigureApplicationCookie(options =>
 {
-    options.LoginPath = "/Account/Login"; // Giriþ yapýlmamýþsa yönlendirilecek yol
-    options.AccessDeniedPath = "/Account/AccessDenied"; // Eriþim reddedildiðinde yönlendirilecek yol
-    options.LogoutPath = "/Account/Logout"; // Çýkýþ iþlemi için yol (isteðe baðlý)
+    options.LoginPath = "/Admin/Account/Login"; // Giriþ yapýlmamýþsa yönlendirilecek yol
+    options.AccessDeniedPath = "/Admin/Account/AccessDenied"; // Eriþim reddedildiðinde yönlendirilecek yol
+    options.LogoutPath = "/Admin/Account/Logout"; // Çýkýþ iþlemi için yol (isteðe baðlý)
 });
+
 //AddDbContext
 builder.Services.AddRestaurantDb();
 
@@ -42,6 +44,11 @@ builder.Services.AddRestaurantDb();
 builder.Services.AddRepositoryService();
 //builder.Services.AddAuthentication();
 //builder.Services.AddAuthorization();
+builder.Services.AddControllersWithViews(options =>
+{
+    // Global olarak Authorize attribute'unu tüm controller'lara uygula
+    options.Filters.Add(new AuthorizeFilter());
+});
 
 var app = builder.Build();
 
@@ -61,35 +68,35 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-//app.MapControllerRoute(
-//    name: "areas",
-//    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
-//);
+app.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+);
 
-//app.MapControllerRoute(
-//    name: "default",
-//    pattern: "{controller=Home}/{action=Index}/{id?}"
-//);
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}"
+);
 
-app.UseEndpoints(endpoints =>
-{
-    //Admin Route
-    app.UseEndpoints(endpoints =>
-    {
-        endpoints.MapControllerRoute(
-          name: "areas",
-          pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
-        );
-    });
+//app.UseEndpoints(endpoints =>
+//{
+//    //Admin Route
+//    app.UseEndpoints(endpoints =>
+//    {
+//        endpoints.MapControllerRoute(
+//          name: "areas",
+//          pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+//        );
+//    });
 
-    //Default Route
-    app.UseEndpoints(endpoints =>
-    {
-        endpoints.MapControllerRoute(
-          name: "default",
-          pattern: "{controller=Home}/{action=Index}/{id?}"
-        );
-    });
-});
+//    //Default Route
+//    app.UseEndpoints(endpoints =>
+//    {
+//        endpoints.MapControllerRoute(
+//          name: "default",
+//          pattern: "{controller=Home}/{action=Index}/{id?}"
+//        );
+//    });
+//});
 
 app.Run();
