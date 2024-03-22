@@ -1,5 +1,3 @@
-using CompanyRestaurant.Common.MailSender.Abstract;
-using CompanyRestaurant.Common.MailSender.Concrate;
 using CompanyRestaurant.DAL.Context;
 using CompanyRestaurant.Entities.Entities;
 using CompanyRestaurant.IOC.DependecyResolvers;
@@ -19,18 +17,20 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 //builder.Services.AddControllersWithViews();
 
 // Eðer kullanýcaksanýz, ASP.NET Core Identity yapýlandýrmasý
-builder.Services.AddIdentity<AppUser, IdentityRole<int>>(options =>
+builder.Services.AddIdentity<AppUser, AppRole>(options =>
 {
-    options.SignIn.RequireConfirmedAccount = false;
+    //options.SignIn.RequireConfirmedAccount = false;
     options.Password.RequireDigit = false;
     options.Password.RequireLowercase = false;
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequireUppercase = false;
-    options.SignIn.RequireConfirmedEmail = false;
+    options.SignIn.RequireConfirmedEmail = true;
     options.Password.RequiredLength = 2;
 })
 .AddEntityFrameworkStores<CompanyRestaurantContext>()
 .AddDefaultTokenProviders();
+
+
 
 //bu ayar biz admin paneli içine accountcontrolleri koyduðumuz için var.
 builder.Services.ConfigureApplicationCookie(options =>

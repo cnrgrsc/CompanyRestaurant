@@ -108,8 +108,6 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
             return View("ConfirmEmailSuccess");
         }
 
-
-
         [AllowAnonymous]
         [HttpGet]
         public IActionResult Register()
