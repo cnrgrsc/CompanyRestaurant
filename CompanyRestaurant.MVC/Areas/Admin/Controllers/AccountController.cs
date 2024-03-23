@@ -1,5 +1,4 @@
 ﻿using CompanyRestaurant.Common.MailSender.Abstract;
-using CompanyRestaurant.Common.MailSender.Concrate;
 using CompanyRestaurant.Entities.Entities;
 using CompanyRestaurant.MVC.Models.ForgotPasswordVM;
 using CompanyRestaurant.MVC.Models.LoginVM;

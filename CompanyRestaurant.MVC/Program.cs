@@ -19,7 +19,7 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 // Eðer kullanýcaksanýz, ASP.NET Core Identity yapýlandýrmasý
 builder.Services.AddIdentity<AppUser, AppRole>(options =>
 {
-    //options.SignIn.RequireConfirmedAccount = false;
+    options.SignIn.RequireConfirmedAccount = true;
     options.Password.RequireDigit = false;
     options.Password.RequireLowercase = false;
     options.Password.RequireNonAlphanumeric = false;
