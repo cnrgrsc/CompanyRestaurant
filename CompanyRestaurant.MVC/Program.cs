@@ -7,14 +7,9 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//builder.Services.AddMapperService();
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
-
-// Add services to the container.
-
-//builder.Services.AddControllersWithViews();
 
 // Eðer kullanýcaksanýz, ASP.NET Core Identity yapýlandýrmasý
 builder.Services.AddIdentity<AppUser, AppRole>(options =>
@@ -45,8 +40,7 @@ builder.Services.AddRestaurantDb();
 
 //AddRepositories
 builder.Services.AddRepositoryService();
-//builder.Services.AddAuthentication();
-//builder.Services.AddAuthorization();
+
 builder.Services.AddControllersWithViews(options =>
 {
     // Global olarak Authorize attribute'unu tüm controller'lara uygula
