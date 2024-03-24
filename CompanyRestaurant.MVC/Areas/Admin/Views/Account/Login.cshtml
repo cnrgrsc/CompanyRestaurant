@@ -5,75 +5,48 @@
 }
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-    <style>
-        body {
-            background-color: #f7f7f7;
-            font-family: 'Roboto', sans-serif;
-        }
-
-        .card {
-            border: none;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-
-        .card-header, .card-footer {
-            background-color: transparent;
-            border-bottom: 0;
-            border-top: 0;
-        }
-
-        .btn-primary {
-            background-color: #007bff;
-            border: none;
-        }
-
-        .form-control {
-            border-radius: 20px;
-        }
-    </style>
+	<meta charset="utf-8">
+	<title>Restoran Giriş</title>
+	<!-- Mobile Specific Metas -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<!-- Font-->
+	<link rel="stylesheet" type="text/css" href="~/colorlib-regform-32/css/nunito-font.css">
+	<!-- Main Style Css -->
+	<link rel="stylesheet" href="~/colorlib-regform-32/css/style.css" />
 </head>
-<body class="d-flex align-items-center justify-content-center" style="min-height: 100vh;">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6 col-lg-4">
-                <form class="card p-4" asp-action="Login" method="post">
-                    <div class="card-header text-center">
-                        <h2 class="h4">Please Sign In</h2>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label for="inputEmail" class="sr-only">Email address</label>
-                            <input type="email" id="inputEmail" asp-for="Email" class="form-control" placeholder="Email address" required autofocus>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputPassword" class="sr-only">Password</label>
-                            <input type="password" id="inputPassword" asp-for="Password" class="form-control" placeholder="Password" required>
-                        </div>
-                        <div class="form-group form-check">
-                            <input type="checkbox" asp-for="RememberMe" class="form-check-input" id="rememberMe">
-                            <label class="form-check-label" for="rememberMe">Remember me</label>
-                        </div>
-                    </div>
-                    <div class="card-footer text-center">
-                        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-                        <div class="mt-4">
-                            <a href="@Url.Action("Register", "Account", new { area = "Admin" })">Create an account</a>
-                            <br>
-                            <a href="@Url.Action("ForgotPassword", "Account", new { area = "Admin" })">Forgot your password?</a>
-                        </div>
-                    </div>
+<body class="form-v6">
+	<div class="page-content">
+		<div class="form-v6-content">
+			<div class="form-left">
+				<img src="~/colorlib-regform-32/images/Sauce1.jpg" alt="form" style="width:484px; height:584px">
+			</div>
+			<form class="form-detail" method="post">
+				<h2>Kullanıcı Giriş</h2>
+				<div class="form-row">
+					<input type="text" id="your-email" class="input-text" placeholder="Email  Addresiniz" asp-for="Email" required pattern="[^@@]+@@[^@@]+.[a-zA-Z]{2,6}">
+				</div>
 
-                </form>
-            </div>
-        </div>
-    </div>
+				<div class="form-row">
+					<input type="password" id="password" class="input-text" placeholder="Şifreniz" asp-for="Password" required>
+				</div>
+
+				<div class="form-group form-check">
+					<input type="checkbox" asp-for="RememberMe" class="form-check-input" id="rememberMe">
+					<label class="form-check-label" for="rememberMe">Remember me</label>
+				</div>
+
+				<div class="card-footer text-center">
+					<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+					<div class="mt-4">
+						<a href="@Url.Action("Register", "Account", new { area = "Admin" })">Create an account</a>
+						<br>
+						<a href="@Url.Action("ForgotPassword", "Account", new { area = "Admin" })">Forgot your password?</a>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
 </body>
 </html>

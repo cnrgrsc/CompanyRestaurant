@@ -3,73 +3,46 @@
 @{
     Layout = null; // Disable the default layout for this view
 }
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap" rel="stylesheet">
-    <style>
-        body {
-            background-color: #f0f2f5;
-            font-family: 'Open Sans', sans-serif;
-        }
-
-        .container {
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .registration-form {
-            padding: 25px;
-            background: #fff;
-            box-shadow: 0 5px 15px rgba(0,0,0,.1);
-            border-radius: 8px;
-        }
-
-        .form-control {
-            border-radius: 20px;
-            margin-bottom: 20px;
-            padding: 25px 15px;
-        }
-
-        .btn-primary {
-            border-radius: 20px;
-            padding: 10px 25px;
-            background-color: #007bff;
-            border-color: #007bff;
-        }
-    </style>
+	<meta charset="utf-8">
+	<title>SignalR Restoran Kayıt</title>
+	<!-- Mobile Specific Metas -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<!-- Font-->
+	<link rel="stylesheet" type="text/css" href="~/colorlib-regform-32/css/nunito-font.css">
+	<!-- Main Style Css -->
+	<link rel="stylesheet" href="~/colorlib-regform-32/css/style.css" />
 </head>
-<body>
-    <div class="container">
-        <form class="registration-form" asp-action="Register" method="post">
-            <h3 class="text-center mb-4">Register</h3>
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <input type="text" id="inputUserName" asp-for="UserName" class="form-control" placeholder="Username" required>
-                <span asp-validation-for="UserName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="email" id="inputEmail" asp-for="Email" class="form-control" placeholder="Email address" required autofocus>
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="password" id="inputPassword" asp-for="Password" class="form-control" placeholder="Password" required>
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="password" id="inputConfirmPassword" asp-for="ConfirmPassword" class="form-control" placeholder="Confirm Password" required>
-                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-            </div>
-            <button type="submit" class="btn btn-primary btn-block">Register</button>
-        </form>
-    </div>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+<body class="form-v6">
+	<div class="page-content">
+		<div class="form-v6-content">
+			<div class="form-left">
+				<img src="~/colorlib-regform-32/images/Personal.jpg" alt="form" style="width:484px; height:584px">
+			</div>
+			<form class="form-detail" method="post">
+				<h2>Yeni Kullanıcı Kaydı</h2>
+				<div class="form-row">
+					<input type="text" id="your-email" class="input-text" placeholder="Email  Addresiniz" asp-for="Email" required pattern="[^@@]+@@[^@@]+.[a-zA-Z]{2,6}">
+				</div>
+
+				<div class="form-row">
+					<input type="password" id="password" class="input-text" placeholder="Şifreniz" asp-for="Password" required>
+				</div>
+
+				<div class="form-row">
+					<input type="password" id="password" class="input-text" placeholder="Şifreniz tekrar" asp-for="ConfirmPassword" required>
+				</div>
+
+				<div class="form-row">
+					<input type="text" id="full-name" class="input-text" placeholder="Adınız-soyadınız" required asp-for="UserName">
+				</div>
+
+
+				<button class="btn btn-info">Kayıt Ol</button>
+			</form>
+		</div>
+	</div>
 </body>
 </html>

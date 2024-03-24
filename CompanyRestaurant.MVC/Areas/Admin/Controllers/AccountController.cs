@@ -132,7 +132,7 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
                                                       $"Lütfen hesabınızı onaylamak için <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>buraya tıklayın</a>.");
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Login", "Account", new {area = "Admin"});
                 }
                 AddErrors(result);
             }
