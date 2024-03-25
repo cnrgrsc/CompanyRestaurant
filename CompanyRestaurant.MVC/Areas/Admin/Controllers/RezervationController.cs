@@ -1,46 +1,104 @@
 ﻿using AutoMapper;
 using CompanyRestaurant.BLL.Abstracts;
 using CompanyRestaurant.Entities.Entities;
+using CompanyRestaurant.MVC.Models.RezervationVM;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class RezervationController : Controller
+    [Authorize(Roles = "Admin")] // Yalnızca admin rolüne sahip kullanıcılar erişebilir.
+    public class ReservationController : Controller
     {
-        private readonly IRezervationRepository _rezervationRepository;
-        private readonly ITableRepository _tableRepository;
-        private readonly IAppUserRepository _appUserRepository;
+        private readonly IRezervationRepository _reservationRepository;
         private readonly IMapper _mapper;
 
-        public RezervationController(IRezervationRepository rezervationRepository, ITableRepository tableRepository, IAppUserRepository appUserRepository, IMapper mapper)
+        public ReservationController(IRezervationRepository reservationRepository, IMapper mapper)
         {
-            _rezervationRepository = rezervationRepository;
-            _tableRepository = tableRepository;
-            _appUserRepository = appUserRepository;
+            _reservationRepository = reservationRepository;
             _mapper = mapper;
         }
+
         public async Task<IActionResult> Index()
         {
-            var rezervations = await _rezervationRepository.GetAllAsync();
-            var tables = await _tableRepository.GetAllAsync();
-            //var appUsers = await _appUserRepository.GetAll();
-            ViewBag.Tables = tables;
-            //ViewBag.AppUsers = appUsers;
-            return View(rezervations);
+            var reservations = await _reservationRepository.GetAllAsync();
+            var model = _mapper.Map<IEnumerable<RezervationViewModel>>(reservations);
+            return View(model);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
-
-            var tables = await _tableRepository.GetAllAsync();
-            ViewBag.TablesSelect = new SelectList(tables, "ID", "TableNo");
-            //var appUsers=await _appUserRepository.GetAll();
-            //ViewBag.AppUsersSelect = new SelectList(appUsers, "ID", "UserName");
-            return View();
+            return View(new RezervationViewModel());
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(RezervationViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var reservation = _mapper.Map<Rezervation>(model);
+                await _reservationRepository.MakeReservation(reservation);
+                return RedirectToAction(nameof(Index));
+            }
+            return View(model);
+        }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            var reservation = await _reservationRepository.GetByIdAsync(id);
+            if (reservation == null)
+            {
+                return NotFound();
+            }
+            var model = _mapper.Map<RezervationViewModel>(reservation);
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, RezervationViewModel model)
+        {
+            if (id != model.Id || !ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var reservation = _mapper.Map<Rezervation>(model);
+            await _reservationRepository.UpdateAsync(reservation);
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var reservation = await _reservationRepository.GetByIdAsync(id);
+            if (reservation == null)
+            {
+                return NotFound();
+            }
+            var model = _mapper.Map<RezervationViewModel>(reservation);
+            return View(model);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            await _reservationRepository.CancelReservation(id);
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var reservation = await _reservationRepository.GetByIdAsync(id);
+            if (reservation == null)
+            {
+                return NotFound();
+            }
+            var model = _mapper.Map<RezervationViewModel>(reservation);
+            return View(model);
+        }
     }
 }

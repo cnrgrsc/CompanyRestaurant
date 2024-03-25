@@ -2,45 +2,39 @@
 using CompanyRestaurant.BLL.Abstracts;
 using CompanyRestaurant.Entities.Entities;
 using CompanyRestaurant.MVC.Models.MaterialVM;
+using CompanyRestaurant.MVC.Models.RecipeVM;
 using CompanyRestaurant.MVC.Models.SupplierVM;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")] // Yalnızca admin rolüne sahip kullanıcılar erişebilir.
     public class MaterialController : Controller
     {
         private readonly IMaterialRepository _materialRepository;
-        private readonly ISupplierRepository _supplierRepository;
         private readonly IMapper _mapper;
 
-        public MaterialController(IMaterialRepository materialRepository, ISupplierRepository supplierRepository, IMapper mapper)
+        public MaterialController(IMaterialRepository materialRepository, IMapper mapper)
         {
             _materialRepository = materialRepository;
-            _supplierRepository = supplierRepository;
             _mapper = mapper;
         }
 
         public async Task<IActionResult> Index()
         {
             var materials = await _materialRepository.GetAllAsync();
-            var model = _mapper.Map<IEnumerable<MaterialViewModel>>(materials); // Eğer MaterialViewModel kullanıyorsanız
-                                                                                // ViewBag ile tedarikçi bilgilerini görünüme aktar
-            var suppliers = await _supplierRepository.GetAllAsync();
-            ViewBag.Suppliers = _mapper.Map<IEnumerable<SupplierViewModel>>(suppliers); // Eğer SupplierViewModel kullanıyorsanız
+            var model = _mapper.Map<IEnumerable<MaterialViewModel>>(materials);
             return View(model);
         }
 
-        // Malzeme ekleme sayfasını göster
         public IActionResult Create()
         {
-            // Ekleme işlemi için gerekli olan tedarikçi bilgilerini ViewBag ile taşıyabiliriz.
-            var suppliersTask = _supplierRepository.GetAllAsync();
-            ViewBag.Suppliers = _mapper.Map<IEnumerable<SupplierViewModel>>(suppliersTask.Result); // Eğer SupplierViewModel kullanıyorsanız
-            return View(new MaterialViewModel()); // Boş bir ViewModel örneği
+            // Burada gerekirse malzeme birim tipi seçeneklerini ViewBag ile view'a geçirebilirsiniz.
+            return View(new MaterialViewModel());
         }
 
-        // POST: Malzeme ekleme işlemi
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(MaterialViewModel model)
@@ -51,22 +45,9 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
                 await _materialRepository.CreateAsync(material);
                 return RedirectToAction(nameof(Index));
             }
-            // İşlem başarısız olursa, formu ve hataları tekrar görüntüleyin
-            return View(model);
-        }
-        // Malzeme detaylarını görüntüleme
-        public async Task<IActionResult> Details(int id)
-        {
-            var material = await _materialRepository.GetByIdAsync(id);
-            if (material == null)
-            {
-                return NotFound();
-            }
-            var model = _mapper.Map<MaterialViewModel>(material);
             return View(model);
         }
 
-        // Malzeme düzenleme sayfasını göster
         public async Task<IActionResult> Edit(int id)
         {
             var material = await _materialRepository.GetByIdAsync(id);
@@ -75,21 +56,13 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
                 return NotFound();
             }
             var model = _mapper.Map<MaterialViewModel>(material);
-            var suppliers = await _supplierRepository.GetAllAsync();
-            ViewBag.Suppliers = _mapper.Map<IEnumerable<SupplierViewModel>>(suppliers); // Tedarikçi bilgilerini ViewBag ile taşı
             return View(model);
         }
 
-        // POST: Malzeme düzenleme işlemi
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, MaterialViewModel model)
+        public async Task<IActionResult> Edit(MaterialViewModel model)
         {
-            if (id != model.Id)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
                 var material = _mapper.Map<Material>(model);
@@ -99,7 +72,6 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
             return View(model);
         }
 
-        // Malzeme silme sayfasını göster
         public async Task<IActionResult> Delete(int id)
         {
             var material = await _materialRepository.GetByIdAsync(id);
@@ -111,18 +83,58 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
             return View(model);
         }
 
-        // POST: Malzeme silme işlemi
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var models = await _materialRepository.GetByIdAsync(id);
+            if (models == null)
+            {
+                return NotFound();
+            }
+            await _materialRepository.DestroyAsync(models);
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Details(int id)
         {
             var material = await _materialRepository.GetByIdAsync(id);
             if (material == null)
             {
                 return NotFound();
             }
-            await _materialRepository.DestroyAsync(material); // Kalıcı olarak silinmesi
-            return RedirectToAction(nameof(Index));
+            var model = _mapper.Map<MaterialViewModel>(material);
+            return View(model);
+        }
+
+        // Stok raporu ve malzeme stok seviyesi için ekstra işlevler
+        public async Task<IActionResult> StockReport()
+        {
+            var materials = await _materialRepository.GenerateStockReport();
+            var model = _mapper.Map<IEnumerable<MaterialViewModel>>(materials);
+            return View(model);
+        }
+
+        public async Task<IActionResult> MaterialStockLevel(int id)
+        {
+            var stockLevel = await _materialRepository.GetMaterialStockLevel(id);
+            ViewBag.StockLevel = stockLevel;
+            // Burada, belirli bir malzemenin stok seviyesini göstermek için uygun bir View'a yönlendirme yapabilirsiniz.
+            // Örneğin, malzemenin detay sayfasına geri dönebilirsiniz veya stok seviyesini ayrı bir sayfada gösterebilirsiniz.
+            return View();
+        }
+
+        public async Task<IActionResult> RecipeDetails(int recipeId)
+        {
+            var materials = await _materialRepository.GetMaterialsForRecipe(recipeId);
+            var model = new RecipeViewModel
+            {
+
+                // Reçetenin diğer detayları
+                RecipeMaterials = (List<Models.RecipeMaterialVM.RecipeMaterialViewModel>)_mapper.Map<IEnumerable<MaterialViewModel>>(materials)
+            };
+
+            return View(model);
         }
 
     }

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class CategoryController : Controller
     {
         private readonly IRepository<Category> _categoryRepository;
@@ -58,16 +58,15 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, CategoryViewModel model)
+        public async Task<IActionResult> Edit(CategoryViewModel model)
         {
-            if (id != model.Id || !ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return View(model);
+                var category = _mapper.Map<Category>(model);
+                await _categoryRepository.UpdateAsync(category);
+                return RedirectToAction(nameof(Index));
             }
-
-            var category = _mapper.Map<Category>(model);
-            await _categoryRepository.UpdateAsync(category);
-            return RedirectToAction(nameof(Index));
+            return View(model);
         }
 
         public async Task<IActionResult> Delete(int id)
@@ -103,6 +102,8 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
                 return NotFound();
             }
             var model = _mapper.Map<CategoryViewModel>(category);
+            // Ürün sayısını hesaplayıp modele ekleyin (Eğer gerekliyse)
+            model.ProductCount = category.Products?.Count ?? 0;
             return View(model);
         }
     }

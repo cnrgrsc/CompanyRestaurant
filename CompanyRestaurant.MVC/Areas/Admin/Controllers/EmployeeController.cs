@@ -2,11 +2,14 @@
 using CompanyRestaurant.BLL.Abstracts;
 using CompanyRestaurant.Entities.Entities;
 using CompanyRestaurant.MVC.Models.EmployeeVM;
+using CompanyRestaurant.MVC.Models.PerformanceReviewVM;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class EmployeeController : Controller
     {
         private readonly IEmployeeRepository _employeeRepository;
@@ -27,20 +30,21 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
 
         public IActionResult Create()
         {
-            return View();
+            return View(new EmployeeViewModel());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(EmployeeViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var employee = _mapper.Map<Employee>(model);
-                await _employeeRepository.CreateAsync(employee);
-                return RedirectToAction(nameof(Index));
+                return View(model);
             }
-            return View(model);
+
+            var employee = _mapper.Map<Employee>(model);
+            await _employeeRepository.CreateAsync(employee);
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Edit(int id)
@@ -50,26 +54,23 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
             {
                 return NotFound();
             }
+
             var model = _mapper.Map<EmployeeViewModel>(employee);
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, EmployeeViewModel model)
+        public async Task<IActionResult> Edit(EmployeeViewModel model)
         {
-            if (id != model.Id)
+            if (!ModelState.IsValid)
             {
-                return NotFound();
+                return View(model);
             }
 
-            if (ModelState.IsValid)
-            {
-                var employee = _mapper.Map<Employee>(model);
-                await _employeeRepository.UpdateAsync(employee);
-                return RedirectToAction(nameof(Index));
-            }
-            return View(model);
+            var employee = _mapper.Map<Employee>(model);
+            await _employeeRepository.UpdateAsync(employee);
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Delete(int id)
@@ -79,8 +80,8 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            var model = _mapper.Map<EmployeeViewModel>(employee);
-            return View(model);
+
+            return View(_mapper.Map<EmployeeViewModel>(employee));
         }
 
         [HttpPost, ActionName("Delete")]
@@ -92,7 +93,8 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            await _employeeRepository.DeleteAsync(employee);
+
+            await _employeeRepository.DestroyAsync(employee);
             return RedirectToAction(nameof(Index));
         }
 
@@ -103,7 +105,9 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
             {
                 return NotFound();
             }
+
             var model = _mapper.Map<EmployeeViewModel>(employee);
+            model.PerformanceReviews = _mapper.Map<List<PerformanceReviewViewModel>>(employee.PerformanceReviews);
             return View(model);
         }
     }
