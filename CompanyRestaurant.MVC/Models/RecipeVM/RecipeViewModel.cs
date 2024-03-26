@@ -29,8 +29,8 @@ namespace CompanyRestaurant.MVC.Models.RecipeVM
         [Display(Name = "Reçete Görseli URL")]
         public string ImageUrl { get; set; }  //Reçete resmi URL
 
-        [Display(Name = "Ürün ID")]
-        public int ProductId { get; set; } // Ürün ile ilişkilendirme
+        //[Display(Name = "Ürün ID")]
+        //public int ProductId { get; set; } // Ürün ile ilişkilendirme
 
         // Reçete maliyeti gibi hesaplanabilir alanlar da ViewModel'e eklenebilir.
         [Display(Name = "Toplam Maliyet")]
