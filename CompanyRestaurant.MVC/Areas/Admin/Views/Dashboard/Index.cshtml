@@ -4,62 +4,86 @@
     ViewData["Title"] = "Dashboard";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-<h2>Dashboard</h2>
-
-<div class="container">
-    <div class="row">
-        <!-- Toplam Satış Kartı -->
-        <div class="col-md-3">
-            <div class="card text-white bg-primary mb-3">
-                <div class="card-header">Toplam Satış</div>
-                <div class="card-body">
-                    <h5 class="card-title">@Model.TotalSales $</h5>
-                    <p class="card-text">Bugüne kadar yapılan toplam satış miktarı.</p>
-                </div>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Dashboard Ekranı</h1>
             </div>
         </div>
-
-        <!-- Bugünkü Satış Kartı -->
-        <div class="col-md-3">
-            <div class="card text-white bg-success mb-3">
-                <div class="card-header">Bugünkü Satışlar</div>
-                <div class="card-body">
-                    <h5 class="card-title">@Model.TodaySales $</h5>
-                    <p class="card-text">Bugün yapılan satış miktarı.</p>
+    </div><!-- /.container-fluid -->
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3>@Model.TotalSales $</h3>
+                        <p>Toplam Satış</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-bag"></i>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <!-- Aktif Rezervasyon Sayısı Kartı -->
-        <div class="col-md-3">
-            <div class="card text-white bg-warning mb-3">
-                <div class="card-header">Aktif Rezervasyonlar</div>
-                <div class="card-body">
-                    <h5 class="card-title">@Model.ActiveReservations</h5>
-                    <p class="card-text">Şu anda aktif olan rezervasyon sayısı.</p>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>@Model.TodaySales $</h3>
+                        <p>Bugünkü Satışlar</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-stats-bars"></i>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <!-- Stokta Azalan Ürün Sayısı Kartı -->
-        <div class="col-md-3">
-            <div class="card text-white bg-danger mb-3">
-                <div class="card-header">Stokta Azalan Ürünler</div>
-                <div class="card-body">
-                    <h5 class="card-title">@Model.LowStockProductsCount</h5>
-                    <p class="card-text">Stok miktarı azalan ürünlerin sayısı.</p>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>@Model.ActiveReservations</h3>
+                        <p>Aktif Rezervasyonlar</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person-add"></i>
+                    </div>
                 </div>
             </div>
-        </div>
-        <!-- Toplam Çalışcan Sayısı Kartı -->
-        <div class="col-md-3">
-            <div class="card text-white bg-danger mb-3">
-                <div class="card-header">Toplam Çalışan Sayısı</div>
-                <div class="card-body">
-                    <h5 class="card-title">@Model.TotalEmployees</h5>
-                    <p class="card-text">Stok miktarı azalan ürünlerin sayısı.</p>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                        <h3>@Model.LowStockProductsCount</h3>
+                        <p>Stokta Azalan Ürünler</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-pie-graph"></i>
+                    </div>
                 </div>
             </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                        <h3>@Model.TotalEmployees</h3>
+                        <p>Toplam Çalışan Sayısı</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person-stalker"></i>
+                    </div>
+                </div>
+            </div>
+            <!-- ./col -->
         </div>
-    </div>
-</div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>

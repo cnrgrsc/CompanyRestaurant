@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using CompanyRestaurant.BLL.Abstracts;
-using CompanyRestaurant.BLL.Services;
 using CompanyRestaurant.Entities.Entities;
-using CompanyRestaurant.MVC.Models.SupplierVM;
 using CompanyRestaurant.MVC.Models.TableVM;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
