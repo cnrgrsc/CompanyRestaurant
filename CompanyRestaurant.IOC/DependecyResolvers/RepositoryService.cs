@@ -32,6 +32,7 @@ namespace CompanyRestaurant.IOC.DependecyResolvers
             services.AddScoped<ISupplierRepository, SupplierRepository>();
             services.AddScoped<ITableRepository, TableRepository>();
             services.AddScoped<IUnitStockRepository, UnitStockRepository>();
+            services.AddScoped<IPerformanceReviewRepository, PerformanceReviewRepository>();
             services.AddSingleton<IEmailSender, EmailSender>();
             
 
