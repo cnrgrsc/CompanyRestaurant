@@ -36,6 +36,7 @@ namespace CompanyRestaurant.MVC.Models.EmployeeVM
 
         [Display(Name = "Durum")]
         public DataStatus Status { get; set; } // Kategori durumu
+
         [Display(Name = "Aktif Mi?")]
         public bool IsActive { get; set; } // Kategori aktif mi?
 

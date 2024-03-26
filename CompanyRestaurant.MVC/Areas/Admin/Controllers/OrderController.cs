@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CompanyRestaurant.BLL.Abstracts;
+using CompanyRestaurant.BLL.Services;
 using CompanyRestaurant.Entities.Entities;
 using CompanyRestaurant.MVC.Models.OrderVM;
 using Microsoft.AspNetCore.Authorization;
@@ -9,28 +10,46 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admin")] // Yalnızca admin rolüne sahip kullanıcılar erişebilir.
+    [Authorize] // Yalnızca admin rolüne sahip kullanıcılar erişebilir.
     public class OrderController : Controller
     {
         private readonly IOrderRepository _orderRepository;
+        private readonly IEmployeeRepository _employeeRepository;
+        private readonly ITableRepository _tableRepository;
+        private readonly ICurrentRepository _currentRepository;
         private readonly IMapper _mapper;
 
-        public OrderController(IOrderRepository orderRepository, IMapper mapper)
+        public OrderController(IOrderRepository orderRepository, IEmployeeRepository employeeRepository,ITableRepository tableRepository,ICurrentRepository currentRepository,IMapper mapper)
         {
             _orderRepository = orderRepository;
+            _employeeRepository = employeeRepository;
+            _tableRepository = tableRepository;
+            _currentRepository = currentRepository;
             _mapper = mapper;
         }
 
         public async Task<IActionResult> Index()
         {
             var orders = await _orderRepository.GetAllAsync();
+            var employees = await _employeeRepository.GetAllAsync();
+            ViewBag.Employees = employees;
+            var tables = await _tableRepository.GetAllAsync();
+            ViewBag.Tables = tables;
+            var currents = await _currentRepository.GetAllAsync();
+            ViewBag.Currents = currents;
             var model = _mapper.Map<IEnumerable<OrderViewModel>>(orders);
             return View(model);
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             // Burada gerekirse kategori, masa ve çalışan seçeneklerini ViewBag ile view'a geçirebilirsiniz.
+            var employees = await _employeeRepository.GetAllAsync();
+            ViewBag.EmployeesSelect = new SelectList(employees, "ID", "Name");
+            var tables = await _tableRepository.GetAllAsync();
+            ViewBag.TablesSelect = new SelectList(tables, "ID", "TableNo");
+            var currents = await _currentRepository.GetAllAsync();
+            ViewBag.CurrentsSelect = new SelectList(currents, "ID", "CompanyName");
             return View(new OrderViewModel());
         }
 
@@ -44,11 +63,24 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
                 await _orderRepository.CreateAsync(order);
                 return RedirectToAction(nameof(Index));
             }
+
+            var employeesReloaded = await _employeeRepository.GetAllAsync();
+            ViewBag.EmployeesSelect = new SelectList(employeesReloaded, "ID", "Name");
+            var tablesReloaded = await _tableRepository.GetAllAsync();
+            ViewBag.TablesSelect = new SelectList(tablesReloaded, "ID", "TableNo");
+            var currentsReloaded = await _currentRepository.GetAllAsync();
+            ViewBag.CurrentsSelect = new SelectList(currentsReloaded, "ID", "CompanyName");
             return View(model);
         }
 
         public async Task<IActionResult> Edit(int id)
         {
+            var employees = await _employeeRepository.GetAllAsync();
+            ViewBag.EmployeesSelect = new SelectList(employees, "ID", "Name");
+            var tables = await _tableRepository.GetAllAsync();
+            ViewBag.TablesSelect = new SelectList(tables, "ID", "TableNo");
+            var currents = await _currentRepository.GetAllAsync();
+            ViewBag.CurrentsSelect = new SelectList(currents, "ID", "CompanyName");
             var order = await _orderRepository.GetByIdAsync(id);
             if (order == null)
             {
@@ -68,6 +100,12 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
                 await _orderRepository.UpdateAsync(order);
                 return RedirectToAction(nameof(Index));
             }
+            var employees = await _employeeRepository.GetAllAsync();
+            ViewBag.EmployeesSelect = new SelectList(employees, "ID", "Name");
+            var tables = await _tableRepository.GetAllAsync();
+            ViewBag.TablesSelect = new SelectList(tables, "ID", "TableNo");
+            var currents = await _currentRepository.GetAllAsync();
+            ViewBag.CurrentsSelect = new SelectList(currents, "ID", "CompanyName");
             return View(model);
         }
 

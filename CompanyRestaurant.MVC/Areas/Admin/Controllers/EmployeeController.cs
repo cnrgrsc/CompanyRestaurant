@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admin")]
+    [Authorize]
     public class EmployeeController : Controller
     {
         private readonly IEmployeeRepository _employeeRepository;
@@ -28,25 +28,30 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
             return View(model);
         }
 
+
+        //Çalışan Ekleme
         public IActionResult Create()
         {
-            return View(new EmployeeViewModel());
+            return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(EmployeeViewModel model)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return View(model);
+                var employee = _mapper.Map<Employee>(model);
+                await _employeeRepository.CreateAsync(employee);
+                return RedirectToAction(nameof(Index));
             }
 
-            var employee = _mapper.Map<Employee>(model);
-            await _employeeRepository.CreateAsync(employee);
-            return RedirectToAction(nameof(Index));
+            return View(model);
+           
         }
 
+
+        //Çalışan düzenleme
         public async Task<IActionResult> Edit(int id)
         {
             var employee = await _employeeRepository.GetByIdAsync(id);
@@ -63,16 +68,17 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(EmployeeViewModel model)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return View(model);
+                var employee = _mapper.Map<Employee>(model);
+                await _employeeRepository.UpdateAsync(employee);
+                return RedirectToAction(nameof(Index));
             }
-
-            var employee = _mapper.Map<Employee>(model);
-            await _employeeRepository.UpdateAsync(employee);
-            return RedirectToAction(nameof(Index));
+            return View(model);
         }
 
+
+        //Çalışan Silme
         public async Task<IActionResult> Delete(int id)
         {
             var employee = await _employeeRepository.GetByIdAsync(id);
@@ -98,6 +104,8 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+
+        //Çalışan Detayları
         public async Task<IActionResult> Details(int id)
         {
             var employee = await _employeeRepository.GetByIdAsync(id);

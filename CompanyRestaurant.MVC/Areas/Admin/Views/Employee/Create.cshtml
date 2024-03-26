@@ -1,4 +1,4 @@
-﻿@model CompanyRestaurant.MVC.Models.EmployeeVM.EmployeeViewModel
+﻿@model CompanyRestaurant.MVC.Models.EmployeeVM.EmployeeViewModel;
 
 @{
     ViewData["Title"] = "Yeni Çalışan Ekle";
@@ -36,6 +36,29 @@
         <label asp-for="Phone" class="control-label">Telefon Numarası</label>
         <input asp-for="Phone" class="form-control" />
         <span asp-validation-for="Phone" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="UserName"></label>
+        <input asp-for="UserName" class="form-control" />
+        <span asp-validation-for="UserName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PerformanceReviewCount"></label>
+        <input asp-for="PerformanceReviewCount" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Status"></label>
+        <input asp-for="Status" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <div class="form-check">
+            <input asp-for="IsActive" class="form-check-input" />
+            <label class="form-check-label" asp-for="IsActive">Aktif Mi?</label>
+        </div>
     </div>
 
     <button type="submit" class="btn btn-primary">Kaydet</button>

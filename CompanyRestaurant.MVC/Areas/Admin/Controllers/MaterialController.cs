@@ -3,14 +3,13 @@ using CompanyRestaurant.BLL.Abstracts;
 using CompanyRestaurant.Entities.Entities;
 using CompanyRestaurant.MVC.Models.MaterialVM;
 using CompanyRestaurant.MVC.Models.RecipeVM;
-using CompanyRestaurant.MVC.Models.SupplierVM;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
 {
-    [Area("Admin")]
-    [Authorize(Roles = "Admin")] // Yalnızca admin rolüne sahip kullanıcılar erişebilir.
+	[Area("Admin")]
+    [Authorize] // Yalnızca admin rolüne sahip kullanıcılar erişebilir.
     public class MaterialController : Controller
     {
         private readonly IMaterialRepository _materialRepository;
