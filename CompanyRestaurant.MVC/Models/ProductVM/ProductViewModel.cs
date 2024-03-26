@@ -28,8 +28,8 @@ namespace CompanyRestaurant.MVC.Models.ProductVM
         [Display(Name = "Kategori Adı")]
         public string CategoryName { get; set; } // Kategori adı
 
-        [Display(Name = "Ürün Resmi URL")]
-        public string ImageUrl { get; set; } // Ürün resminin URL'si
+        [Required(ErrorMessage = "Ürün resmi boş geçilemez!")]
+        public IFormFile ProductImage { get; set; }  //Ürün resmi
 
         // Opsiyonel olarak, ürünün ait olduğu reçete bilgisi de eklenebilir
         public int? RecipeId { get; set; }

@@ -1,35 +1,41 @@
 ﻿using AutoMapper;
 using CompanyRestaurant.BLL.Abstracts;
+using CompanyRestaurant.BLL.Services;
 using CompanyRestaurant.Entities.Entities;
 using CompanyRestaurant.MVC.Models.RecipeVM;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admin")] // Yalnızca admin rolüne sahip kullanıcılar erişebilir.
+    [Authorize/*(Roles = "Admin")*/] // Yalnızca admin rolüne sahip kullanıcılar erişebilir.
     public class RecipeController : Controller
     {
         private readonly IRecipeRepository _recipeRepository;
+        private readonly IProductRepository _productRepository;
         private readonly IMapper _mapper;
 
-        public RecipeController(IRecipeRepository recipeRepository, IMapper mapper)
+        public RecipeController(IRecipeRepository recipeRepository,IProductRepository productRepository ,IMapper mapper)
         {
             _recipeRepository = recipeRepository;
+            _productRepository = productRepository;
             _mapper = mapper;
         }
 
         public async Task<IActionResult> Index()
         {
             var recipes = await _recipeRepository.GetAllAsync();
+            var products = await _productRepository.GetAllAsync();
+            ViewBag.Products = products;
             var model = _mapper.Map<IEnumerable<RecipeViewModel>>(recipes);
             return View(model);
         }
 
         public IActionResult Create()
         {
-            return View(new RecipeViewModel());
+            return View();
         }
 
         [HttpPost]

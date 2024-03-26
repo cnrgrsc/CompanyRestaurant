@@ -21,7 +21,6 @@
             <th>Masa ID</th>
             <th>Cari Hesap ID</th>
             <th>Oluşturulma Tarihi</th>
-            <th>Durum</th>
             <th>Aktif Mi?</th>
             <th>İşlemler</th>
         </tr>
@@ -37,7 +36,6 @@
                 <td>@order.TableId</td>
                 <td>@order.CurrentId</td>
                 <td>@order.CreatedDate.ToString("g")</td>
-                <td>@order.Status</td>
                 <td>@(order.IsActive ? "Evet" : "Hayır")</td>
                 <td>
                     <a href="@Url.Action("Edit", "Order", new { id = order.Id })" class="btn btn-warning">Düzenle</a>

@@ -1,4 +1,5 @@
 ﻿using CompanyRestaurant.BLL.Abstracts;
+using CompanyRestaurant.BLL.Services;
 using CompanyRestaurant.MVC.Models.DashboardVM;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -6,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class DashboardController : Controller
     {
         private readonly IOrderRepository _orderRepository;
@@ -14,28 +15,28 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
         private readonly IRezervationRepository _rezervationRepository;
         private readonly IProductRepository _productRepository;
         private readonly IPerformanceReviewRepository _performanceReviewRepository;
+        private readonly IEmployeeRepository _employeeRepository;
 
         // Kullanılan repository'lerin constructor üzerinden enjekte edilmesi
         public DashboardController(IOrderRepository orderRepository,
                                    IMaterialRepository materialRepository,
                                    IRezervationRepository rezervationRepository,
                                    IProductRepository productRepository,
-                                   IPerformanceReviewRepository performanceReviewRepository)
+                                   IPerformanceReviewRepository performanceReviewRepository,
+                                   IEmployeeRepository employeeRepository)
         {
             _orderRepository = orderRepository;
             _materialRepository = materialRepository;
             _rezervationRepository = rezervationRepository;
             _productRepository = productRepository;
             _performanceReviewRepository = performanceReviewRepository;
+            _employeeRepository = employeeRepository;
+
         }
 
         public async Task<IActionResult> Index()
         {
             var viewModel = new DashboardViewModel();
-
-            // Burada dökümantasyonda belirttiğiniz metrikler ve listeler için
-            // ilgili repository metodlarından verileri çekerek viewModel içerisine doldurun.
-            // Örnek olarak:
 
             // Toplam satış miktarı
             var orders = await _orderRepository.GetAllAsync();
@@ -53,9 +54,9 @@ namespace CompanyRestaurant.MVC.Areas.Admin.Controllers
             var materials = await _materialRepository.GenerateStockReport();
             viewModel.LowStockProductsCount = materials.Count();
 
-            // Yeni müşteriler, toplam çalışan sayısı gibi diğer metriklerin hesaplanması
-            // ve LatestProducts, RecentOrders, LatestPerformanceReviews listelerinin doldurulması
-            // ilgili repository metodlarınız ve iş mantığınıza göre değişiklik gösterebilir.
+            // Toplam çalışan sayısı
+            var totalEmployees = await _employeeRepository.GetAllAsync();
+            viewModel.TotalEmployees = totalEmployees.Count();
 
             return View(viewModel);
         }
